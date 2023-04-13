@@ -8,10 +8,11 @@ import scene_1 from './scene_1.js';
 var config = {
     type: Phaser.AUTO,
     width: 1280, height: 720,
+    pixelArt: true,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
+            gravity: { y: 400 },
             debug: true
         }
     },
