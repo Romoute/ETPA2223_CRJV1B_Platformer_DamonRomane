@@ -83,11 +83,8 @@ export default class scene_1 extends Phaser.Scene {
         this.hpUI.setScrollFactor(0);
         
         //Clavier
-        this.clavier = this.input.keyboard.createCursorKeys();
-        this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.clavier = this.input.keyboard.addKeys('Q,D,SPACE');
 
 
 
