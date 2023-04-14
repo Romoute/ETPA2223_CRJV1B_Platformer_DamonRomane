@@ -86,7 +86,7 @@ export default class scene_1 extends Phaser.Scene {
         this.clavier = this.input.keyboard.createCursorKeys();
         this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 
 
@@ -123,17 +123,10 @@ export default class scene_1 extends Phaser.Scene {
             mouvement.x = 0;
         }
         
-        if (this.clavier.up.isDown) {
-            mouvement.y = -1;
-            this.player.direction = "up"; 
-        } 
-        else if (this.clavier.down.isDown) {
-            mouvement.y = 1;
-            this.player.direction = "down"; 
-        } 
-        else {
-            mouvement.y = 0;
+        if (this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
+            this.player.setVelocityY(-300); 
         }
+        
         
         mouvement.normalize();
         this.player.setVelocity(mouvement.x * this.player.speed, mouvement.y *  this.player.speed);
