@@ -1,0 +1,211 @@
+
+export default class scene_1 extends Phaser.Scene {
+
+    constructor(){
+
+        super({
+            key: "scene_1"
+    });
+}
+
+    // ----- INITIALISATION DES DONNEES DU JOUEUR -----
+    // A chaque fonction changement de scene on donnera des donnees qui seront transmises a la nouvelle scene
+    // pour par exemple donner la position du joueur, ses points de vie, les objets qu'il a en sa possession etc
+    init(data) {
+
+        // Position du sprite joueur
+      //  this.positionX = data.x;
+      //  this.positionY = data.y; 
+    
+    }
+
+    preload(){
+       //preload assets : barre de vie
+        this.load.image('hp1', 'assets/hp1.png');
+        this.load.image('hp2', 'assets/hp2.png');
+        this.load.image('hp3', 'assets/hp3.png');
+
+        this.load.spritesheet('SpriteHitbox', 'assets/SpriteHitbox.png',
+        { frameWidth: 64, frameHeight:64});
+
+        this.load.spritesheet('renard_idle', 'assets/renard_idle.png',
+        { frameWidth: 32, frameHeight:32});
+
+        //Preload de la map
+        this.load.image("Tileset", "tileset/tileset_1.png");
+        this.load.tilemapTiledJSON("scene_1", 'map/scene_1.json');
+        
+        
+        
+
+    }
+    create(){
+
+        this.speed = 300; 
+        this.direction = "left"; 
+        this.hp = 3; 
+        this.invincible = false;  
+        this.invincibleFrame = 60; 
+
+        const map = this.add.tilemap("scene_1");
+
+        //JEU DE TUILE
+        const tileset = map.addTilesetImage("tileset_1", "Tileset");
+
+
+        const background = map.createLayer(
+            "background",
+            tileset
+        );
+
+        const sol = map.createLayer(
+            "sol",
+            tileset
+        );
+
+        
+       
+
+        //This.player
+        this.player = this.physics.add.sprite(0, 330, "renard_idle");
+        //this.player.body.setSize(32, 32 , 300, 100);
+        
+
+        this.SpriteHitbox = this.physics.add.sprite(250, 60, "SpriteHitbox");
+
+        //Collisions
+        sol.setCollisionByExclusion(-1, true);
+        background.setCollisionByExclusion(-1, true);
+        this.physics.add.collider(this.player, sol);
+        
+        this.physics.add.collider(this.SpriteHitbox, sol);
+
+        //this.physics.add.collider(this.player, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.SpriteHitbox, this.loseHp, null, this);
+
+
+
+
+        
+
+       
+        
+        //hpUI CA APPARAIT PAS...
+        this.hpUI = this.add.image(50, 50, "hp3").setOrigin(0,0);
+        this.hpUI.setScrollFactor(0);
+        
+        //Clavier
+        this.clavier = this.input.keyboard.addKeys('Q,D,SPACE');
+        this.cursors = this.input.keyboard.createCursorKeys();
+        
+
+
+
+        // Redimensions du jeu selon le fichier Tiled
+        this.physics.world.setBounds(0, 0, 3200, 1600);
+        this.cameras.main.setBounds(0, 0, 3200, 1600);
+
+
+    }
+
+
+    
+
+
+    update(){ 
+      //MODIFIER DEPLACEMENTS ILS SONT CASSÉS
+        //DEPLACEMENTS 
+
+        //var mouvement = new Phaser.Math.Vector2(0, 0);
+
+
+        if (this.cursors.left.isDown || this.clavier.Q.isDown){ 
+            this.player.setVelocityX(-160); 
+        }
+        else if (this.cursors.right.isDown || this.clavier.D.isDown){ 
+            this.player.setVelocityX(160); 
+        }
+        else{
+            this.player.setVelocityX(0);
+        }
+
+
+        if (this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
+            this.player.setVelocityY(-300); 
+        }
+        
+        
+        //mouvement.normalize();
+        //this.player.setVelocity(mouvement.x * this.speed, mouvement.y *  this.speed);
+
+
+        //INVULNERABLE
+        if (this.invincible){
+            console.log(this.invincibleFrame); 
+            this.invincibleFrame-- ;
+            if(this.invincibleFrame <= 0){
+                    this.invincibleFrame = 60;
+                    this.player.setTint(0xffffff);
+                    this.invincible = false ;
+            }
+        }
+
+
+
+       
+        if(this.hp == 3){
+            this.hpUI.setTexture("hp3");
+        }
+        if(this.hp == 2){
+            this.hpUI.setTexture("hp2");
+        }
+        if(this.hp  == 1){
+            this.hpUI.setTexture("hp1");
+            
+        }else if(this.hp <= 0){
+            this.scene.start("scene_1");
+        }
+    }
+
+    loseHp(){
+        if (this.invincible == false){
+            console.log("Bonjour");
+            this.invincible = true;
+            this.hp -= 1;
+            this.player.setTint(0xff0000);
+            this.player.scene.cameras.main.shake(200, 0.01);
+        }
+    }
+        
+}
+
+//Gethit(player, pics){
+//    console.log("Entrer dans la fonction")
+//    player.setTint(0xff0000);
+//
+//    if (!player.invincible){
+//        player.invincible = true;
+//        
+//        if (player.scene.mort == 0 && this.Protection == false){
+//            console.log("je retire 1 hp")
+//            player.scene.mort += 1;
+//        }
+//        else if (player.scene.mort == 1 && this.Protection == false){
+//            player.scene.mort += 1;
+//        }
+//        else if (player.scene.mort == 2 && this.Protection == false){
+//            player.scene.mort += 1;
+//        }
+//        else if (player.scene.mort == 3 && this.Protection == false){
+//            player.scene.mort += 1;
+//        }
+//        else if (player.scene.mort == 4 && this.Protection == false){
+//            player.scene.mort += 1;
+//        }
+//        else if (player.scene.mort == 5 && this.Protection == false){
+//            player.scene.mort += 1;
+//            this.physics.pause();
+//                this.scene.start("menumort")
+//        }
+
+
