@@ -78,14 +78,14 @@ export default class scene_1 extends Phaser.Scene {
 
        
         
-        //hpUI
+        //hpUI CA APPARAIT PAS...
         this.hpUI = this.add.image(1600, 800, "hp3").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
         //Clavier
-        this.cursors = this.input.keyboard.createCursorKeys();
         this.clavier = this.input.keyboard.addKeys('Q,D,SPACE');
-
+        this.cursors = this.input.keyboard.createCursorKeys();
+        
 
 
 
@@ -108,18 +108,17 @@ export default class scene_1 extends Phaser.Scene {
         var mouvement = new Phaser.Math.Vector2(0, 0);
 
 
-        if (this.clavier.left.isDown) {
-            mouvement.x = -1;
-            this.player.direction = "left"; 
-        } 
-        else if (this.clavier.right.isDown) {
-            mouvement.x = 1;
-            this.player.direction = "right"; 
-        } 
-        else {
-            mouvement.x = 0;
+        if (this.cursors.left.isDown || this.clavier.Q.isDown){ 
+            this.player.setVelocityX(-160); 
         }
-        
+        else if (this.cursors.right.isDown || this.clavier.D.isDown){ 
+            this.player.setVelocityX(160); 
+        }
+        else{
+            this.player.setVelocityX(0);
+        }
+
+
         if (this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
             this.player.setVelocityY(-300); 
         }
