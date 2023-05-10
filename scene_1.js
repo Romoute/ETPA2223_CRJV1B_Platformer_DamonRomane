@@ -13,23 +13,28 @@ export default class scene_1 extends Phaser.Scene {
     // pour par exemple donner la position du joueur, ses points de vie, les objets qu'il a en sa possession etc
     init(data) {
 
-        // Position du sprite joueur
-      //  this.positionX = data.x;
-      //  this.positionY = data.y; 
+    // Position du sprite joueur
+    //  this.positionX = data.x;
+    //  this.positionY = data.y; 
     
     }
 
     preload(){
-       //preload assets : barre de vie
+    //preload assets : barre de vie
         this.load.image('hp1', 'assets/hp1.png');
         this.load.image('hp2', 'assets/hp2.png');
         this.load.image('hp3', 'assets/hp3.png');
+
+        this.load.image('pousse', 'assets/pousse.png');
 
         this.load.spritesheet('SpriteHitbox', 'assets/SpriteHitbox.png',
         { frameWidth: 64, frameHeight:64});
 
         this.load.spritesheet('renard_idle', 'assets/renard_idle.png',
         { frameWidth: 32, frameHeight:32});
+
+        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
+        { frameWidth: 64, frameHeight:64});
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
@@ -41,46 +46,61 @@ export default class scene_1 extends Phaser.Scene {
     }
     create(){
 
+        this.IsOnFirstPlayer = true;
         this.speed = 300; 
         this.direction = "left"; 
         this.hp = 3; 
         this.invincible = false;  
         this.invincibleFrame = 60; 
 
+
+        this.LancementAttenteF = false
+    // Si je veux modifier le temps entre chaque Swap de player
+        this.AttenteF = 40;
+
+
         const map = this.add.tilemap("scene_1");
 
-        //JEU DE TUILE
+//JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
         const tileset = map.addTilesetImage("tileset_1", "Tileset");
-
 
         const background = map.createLayer(
             "background",
             tileset
         );
-
         const sol = map.createLayer(
             "sol",
             tileset
         );
 
-        
-       
 
-        //This.player
-        this.player = this.physics.add.sprite(0, 330, "renard_idle");
+        // CRÉATION OBJETs AVEC TILED
+        this.box = this.physics.add.group({ allowGravity: false, collideWorldBounds: true });
+        map.getObjectLayer('box').objects.forEach((obj) => {
+
+            //console.log('yo')
+            //console.log(obj.x,obj.y)
+            const box = this.box.create(obj.x, obj.y, 'pousse').setOrigin(0);
+            
+        });
+       
+        
+        this.player = this.physics.add.sprite(500, 500 , "renard_idle"); // 0, 330,
+        this.playerDeux = this.physics.add.sprite(350, 490, "SpriteGrandRenard");
+        this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100);
         
 
         this.SpriteHitbox = this.physics.add.sprite(250, 60, "SpriteHitbox");
 
-        //Collisions
+    //Collisions
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
         this.physics.add.collider(this.player, sol);
-        
+        this.physics.add.collider(this.playerDeux, sol);
         this.physics.add.collider(this.SpriteHitbox, sol);
 
-        //this.physics.add.collider(this.player, this.loseHp, null, this);
+    //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.SpriteHitbox, this.loseHp, null, this);
 
 
@@ -90,21 +110,21 @@ export default class scene_1 extends Phaser.Scene {
 
        
         
-        //hpUI CA APPARAIT PAS...
-        this.hpUI = this.add.image(50, 50, "hp3").setOrigin(0,0);
+    //hpUI
+        this.hpUI = this.add.image(10,10, "hp3").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
-        //Clavier
-        this.clavier = this.input.keyboard.addKeys('Q,D,SPACE');
+    //Clavier
+        this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
         this.cursors = this.input.keyboard.createCursorKeys();
         
 
 
 
-        // Redimensions du jeu selon le fichier Tiled
+    //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 3200, 1600);
         this.cameras.main.setBounds(0, 0, 3200, 1600);
-
+        
 
     }
 
@@ -113,16 +133,38 @@ export default class scene_1 extends Phaser.Scene {
 
 
     update(){ 
-      //MODIFIER DEPLACEMENTS ILS SONT CASSÉS
-        //DEPLACEMENTS 
 
-        //var mouvement = new Phaser.Math.Vector2(0, 0);
+//LANCEMENT CHRONO ATTENTE POUR F------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        if (this.LancementAttenteF == true){
+            this.AttenteF -- ;
+            if (this.AttenteF <= 0){
+                this.AttenteF = 40;
+                this.LancementAttenteF = false;
+            }
+        }
+      
 
 
-        if (this.cursors.left.isDown || this.clavier.Q.isDown){ 
+//SWAP CHARA----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        if (this.clavier.F.isDown){
+            if (this.IsOnFirstPlayer == true && this.AttenteF == 40){
+                this.IsOnFirstPlayer = false;
+                this.LancementAttenteF = true;
+                this.cameras.main.startFollow(this.playerDeux);
+            }
+            else if (this.IsOnFirstPlayer == false && this.AttenteF == 40){
+                this.LancementAttenteF = true;
+                this.IsOnFirstPlayer = true;
+                this.cameras.main.startFollow(this.player);
+            }
+            
+        }
+// Déplacement du Joueur 1 
+        if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(-160); 
         }
-        else if (this.cursors.right.isDown || this.clavier.D.isDown){ 
+        else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(160); 
         }
         else{
@@ -130,16 +172,32 @@ export default class scene_1 extends Phaser.Scene {
         }
 
 
-        if (this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
+        if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
         }
+
+
+// Déplacement du Joueur 2
+        if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
+            this.playerDeux.setVelocityX(-160); 
+        }
+        else if (this.cursors.right.isDown && this.IsOnFirstPlayer == false || this.clavier.D.isDown && this.IsOnFirstPlayer == false){ 
+            this.playerDeux.setVelocityX(160); 
+        }
+        else{
+            this.playerDeux.setVelocityX(0);
+        }
+
+        if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
+            this.playerDeux.setVelocityY(-300); 
+        }
+
         
-        
-        //mouvement.normalize();
+   
         //this.player.setVelocity(mouvement.x * this.speed, mouvement.y *  this.speed);
 
 
-        //INVULNERABLE
+//INVULNERABLE------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (this.invincible){
             console.log(this.invincibleFrame); 
             this.invincibleFrame-- ;
@@ -151,7 +209,7 @@ export default class scene_1 extends Phaser.Scene {
         }
 
 
-
+//UI HP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
        
         if(this.hp == 3){
             this.hpUI.setTexture("hp3");
@@ -167,6 +225,8 @@ export default class scene_1 extends Phaser.Scene {
         }
     }
 
+
+// FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
             console.log("Bonjour");
@@ -179,33 +239,8 @@ export default class scene_1 extends Phaser.Scene {
         
 }
 
-//Gethit(player, pics){
-//    console.log("Entrer dans la fonction")
-//    player.setTint(0xff0000);
-//
-//    if (!player.invincible){
-//        player.invincible = true;
-//        
-//        if (player.scene.mort == 0 && this.Protection == false){
-//            console.log("je retire 1 hp")
-//            player.scene.mort += 1;
-//        }
-//        else if (player.scene.mort == 1 && this.Protection == false){
-//            player.scene.mort += 1;
-//        }
-//        else if (player.scene.mort == 2 && this.Protection == false){
-//            player.scene.mort += 1;
-//        }
-//        else if (player.scene.mort == 3 && this.Protection == false){
-//            player.scene.mort += 1;
-//        }
-//        else if (player.scene.mort == 4 && this.Protection == false){
-//            player.scene.mort += 1;
-//        }
-//        else if (player.scene.mort == 5 && this.Protection == false){
-//            player.scene.mort += 1;
-//            this.physics.pause();
-//                this.scene.start("menumort")
-//        }
+
+
+
 
 
