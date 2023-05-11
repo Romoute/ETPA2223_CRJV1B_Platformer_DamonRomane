@@ -74,7 +74,7 @@ export default class scene_1 extends Phaser.Scene {
         );
 
 
-        // CRÉATION OBJETs AVEC TILED
+// CRÉATION OBJETs AVEC TILED-----------------------------------------------------------------------------------------------
         this.box = this.physics.add.group({ allowGravity: false, collideWorldBounds: true });
         map.getObjectLayer('box').objects.forEach((obj) => {
 
