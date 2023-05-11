@@ -12,7 +12,7 @@ export default class menu extends Phaser.Scene {
 
     create(){
         this.clavier = this.input.keyboard.createCursorKeys();
-        this.add.image(640, 360, 'menu'); // 896, 448 taille de l'image
+        this.add.image(448, 224 , 'menu'); // 896, 448 taille de l'image, il faut diviser par 2 jsp
 
     }
 

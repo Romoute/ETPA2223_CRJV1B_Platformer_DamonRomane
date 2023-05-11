@@ -27,14 +27,14 @@ export default class scene_1 extends Phaser.Scene {
 
         this.load.image('pousse', 'assets/pousse.png');
 
-        this.load.spritesheet('SpriteHitbox', 'assets/SpriteHitbox.png',
-        { frameWidth: 64, frameHeight:64});
+        this.load.spritesheet('chasseur', 'assets/chasseur.png',
+        { frameWidth: 263, frameHeight:415});
 
         this.load.spritesheet('renard_idle', 'assets/renard_idle.png',
-        { frameWidth: 32, frameHeight:32});
+        { frameWidth: 519, frameHeight:429});
 
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
-        { frameWidth: 64, frameHeight:64});
+        { frameWidth: 743, frameHeight:577});
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
@@ -46,6 +46,10 @@ export default class scene_1 extends Phaser.Scene {
     }
     create(){
 
+
+
+        this.BoxMovingToLeft = false;
+        this.BoxMovingToRight = false;
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
         this.direction = "left"; 
@@ -75,7 +79,7 @@ export default class scene_1 extends Phaser.Scene {
 
 
 // CRÉATION OBJETs AVEC TILED-----------------------------------------------------------------------------------------------
-        this.box = this.physics.add.group({ allowGravity: false, collideWorldBounds: true });
+        this.box = this.physics.add.group({ allowGravity: false, allowDrag: true, friction: 1, collideWorldBounds: true});
         map.getObjectLayer('box').objects.forEach((obj) => {
 
             //console.log('yo')
@@ -84,27 +88,37 @@ export default class scene_1 extends Phaser.Scene {
             
         });
        
+        this.SpriteBox = this.physics.add.sprite(600, 450 , "box");
         
-        this.player = this.physics.add.sprite(500, 500 , "renard_idle"); // 0, 330,
-        this.playerDeux = this.physics.add.sprite(350, 490, "SpriteGrandRenard");
+        
+        this.player = this.physics.add.sprite(500, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
+        this.playerDeux = this.physics.add.sprite(350, 480, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100);
         
 
-        this.SpriteHitbox = this.physics.add.sprite(250, 60, "SpriteHitbox");
+        this.chasseur = this.physics.add.sprite(250, 60, "chasseur");
 
     //Collisions
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
+
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
-        this.physics.add.collider(this.SpriteHitbox, sol);
+        this.physics.add.collider(this.chasseur, sol);
+        this.physics.add.collider(this.box, sol);
+        this.physics.add.collider(this.player, this.playerDeux);
+        this.physics.add.collider(this.playerDeux, this.player);
+        this.physics.add.collider(this.player, this.box);
+        this.physics.add.collider(this.playerDeux, this.box);
+
+        this.physics.add.collider(this.SpriteBox, sol);
+        this.physics.add.collider(this.player, this.SpriteBox, this.PossibiliteDeBougerLaBox, null, this);
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.SpriteHitbox, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.chasseur, this.loseHp, null, this);
 
-
-
+     
 
         
 
@@ -133,6 +147,20 @@ export default class scene_1 extends Phaser.Scene {
 
 
     update(){ 
+        console.log(this.BoxMovingToRight);
+        this.BoxMovingToRight = false;
+        this.BoxMovingToLeft = false;
+
+        if (this.BoxMovingToRight == true){
+            this.SpriteBox.setVelocityX(160); 
+        }
+        if (this.BoxMovingToLeft == true){
+            this.SpriteBox.setVelocityX(-160); 
+        }
+
+        else if (this.BoxMovingToRight == false || this.BoxMovingToLeft == false){
+            this.SpriteBox.setVelocityX(0); 
+        }
 
 //LANCEMENT CHRONO ATTENTE POUR F------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (this.LancementAttenteF == true){
@@ -193,8 +221,6 @@ export default class scene_1 extends Phaser.Scene {
         }
 
         
-   
-        //this.player.setVelocity(mouvement.x * this.speed, mouvement.y *  this.speed);
 
 
 //INVULNERABLE------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -235,6 +261,15 @@ export default class scene_1 extends Phaser.Scene {
             this.player.setTint(0xff0000);
             this.player.scene.cameras.main.shake(200, 0.01);
         }
+    }
+
+    PossibiliteDeBougerLaBox(player, SpriteBox){
+    if (this.player.x >= this.SpriteBox){
+        this.BoxMovingToLeft = true;
+    }
+    else if (this.player.x < this.SpriteBox){
+        this.BoxMovingToLeft = true;
+    }
     }
         
 }
