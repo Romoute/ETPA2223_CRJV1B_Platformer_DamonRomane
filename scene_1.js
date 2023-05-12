@@ -30,6 +30,9 @@ export default class scene_1 extends Phaser.Scene {
         this.load.spritesheet('chasseur', 'assets/chasseur.png',
         { frameWidth: 263, frameHeight:415});
 
+        this.load.spritesheet('doggo', 'assets/doggo.png',
+        { frameWidth: 78, frameHeight:52});
+
         this.load.spritesheet('renard_idle', 'assets/renard_idle.png',
         { frameWidth: 519, frameHeight:429});
 
@@ -39,6 +42,8 @@ export default class scene_1 extends Phaser.Scene {
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
         this.load.tilemapTiledJSON("scene_1", 'map/scene_1.json');
+
+        this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         
         
         
@@ -47,9 +52,11 @@ export default class scene_1 extends Phaser.Scene {
     create(){
 
 
+    //bouger box
 
-        this.BoxMovingToLeft = false;
-        this.BoxMovingToRight = false;
+        this.SpriteCaillouGoToRight = false;
+        this.SpriteCaillouGoToLeft = false;
+
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
         this.direction = "left"; 
@@ -88,17 +95,21 @@ export default class scene_1 extends Phaser.Scene {
             
         });
        
-        this.SpriteBox = this.physics.add.sprite(600, 450 , "box");
+
+    //Position box
+        this.SpriteCaillou = this.physics.add.sprite(590, 450 , "SpriteCaillou").setImmovable(true)
         
+
         
-        this.player = this.physics.add.sprite(500, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
-        this.playerDeux = this.physics.add.sprite(350, 480, "SpriteGrandRenard");
+    //Position joueur
+        this.player = this.physics.add.sprite(300, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
+        this.playerDeux = this.physics.add.sprite(500, 480, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100);
         
 
-        this.chasseur = this.physics.add.sprite(250, 60, "chasseur");
-
+        this.chasseur = this.physics.add.sprite(1200, 250, "chasseur");
+        this.doggo = this.physics.add.sprite(1220, 250, "doggo");
     //Collisions
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
@@ -106,23 +117,25 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
         this.physics.add.collider(this.chasseur, sol);
+        this.physics.add.collider(this.doggo, sol);
         this.physics.add.collider(this.box, sol);
         this.physics.add.collider(this.player, this.playerDeux);
         this.physics.add.collider(this.playerDeux, this.player);
         this.physics.add.collider(this.player, this.box);
         this.physics.add.collider(this.playerDeux, this.box);
 
-        this.physics.add.collider(this.SpriteBox, sol);
-        this.physics.add.collider(this.player, this.SpriteBox, this.PossibiliteDeBougerLaBox, null, this);
+        this.physics.add.collider(this.SpriteCaillou, sol);
+    //collisions renard et box
+        this.physics.add.collider(this.player, this.SpriteCaillou);
+        this.physics.add.collider(this.playerDeux, this.SpriteCaillou, this.PossibiliteDeBougerLaBox, null, this);
+        
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.chasseur, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.chasseur, this.doggo, this.loseHp, null, this);
 
      
 
         
-
-       
         
     //hpUI
         this.hpUI = this.add.image(10,10, "hp3").setOrigin(0,0);
@@ -144,23 +157,10 @@ export default class scene_1 extends Phaser.Scene {
 
 
     
+//POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
+    update(){    
 
-    update(){ 
-        console.log(this.BoxMovingToRight);
-        this.BoxMovingToRight = false;
-        this.BoxMovingToLeft = false;
-
-        if (this.BoxMovingToRight == true){
-            this.SpriteBox.setVelocityX(160); 
-        }
-        if (this.BoxMovingToLeft == true){
-            this.SpriteBox.setVelocityX(-160); 
-        }
-
-        else if (this.BoxMovingToRight == false || this.BoxMovingToLeft == false){
-            this.SpriteBox.setVelocityX(0); 
-        }
 
 //LANCEMENT CHRONO ATTENTE POUR F------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (this.LancementAttenteF == true){
@@ -206,6 +206,12 @@ export default class scene_1 extends Phaser.Scene {
 
 
 // Déplacement du Joueur 2
+        if (this.cursors.left.isDown && this.SpriteCaillouGoToLeft == true){
+            this.SpriteCaillou.setVelocityX(-150);
+        }
+        else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
+            this.SpriteCaillou.setVelocityX(150);
+        }
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
             this.playerDeux.setVelocityX(-160); 
         }
@@ -214,6 +220,7 @@ export default class scene_1 extends Phaser.Scene {
         }
         else{
             this.playerDeux.setVelocityX(0);
+            this.SpriteCaillou.setVelocityX(0);
         }
 
         if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
@@ -263,13 +270,19 @@ export default class scene_1 extends Phaser.Scene {
         }
     }
 
-    PossibiliteDeBougerLaBox(player, SpriteBox){
-    if (this.player.x >= this.SpriteBox){
-        this.BoxMovingToLeft = true;
-    }
-    else if (this.player.x < this.SpriteBox){
-        this.BoxMovingToLeft = true;
-    }
+    PossibiliteDeBougerLaBox(playerDeux, SpriteCaillou){
+        console.log("Pourquoi");
+        if (this.playerDeux.x > this.SpriteCaillou.x){
+            this.SpriteCaillouGoToLeft = true;
+        }
+        else if (this.playerDeux.x < this.SpriteCaillou.x){
+            this.SpriteCaillouGoToRight = true;
+        }
+        else{
+            this.SpriteCaillouGoToRight = false;
+            this.SpriteCaillouGoToLeft = false;
+        }
+
     }
         
 }
