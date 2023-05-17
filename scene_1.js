@@ -8,6 +8,23 @@ export default class scene_1 extends Phaser.Scene {
     });
 }
 
+//MANQUE : ----------------------------------------------
+//MÉCANIQUES : 
+//wall jump petit
+//baisser petit
+//attaque grand
+////////////////////
+// A MODIFIER 
+// saut des 2 renards 
+//fluidité des controles 
+//mon ptn de bloc
+
+
+// ennemis 
+
+
+
+
     // ----- INITIALISATION DES DONNEES DU JOUEUR -----
     // A chaque fonction changement de scene on donnera des donnees qui seront transmises a la nouvelle scene
     // pour par exemple donner la position du joueur, ses points de vie, les objets qu'il a en sa possession etc
@@ -44,7 +61,7 @@ export default class scene_1 extends Phaser.Scene {
         this.load.tilemapTiledJSON("scene_1", 'map/scene_1.json');
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
-        
+        this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
         
         
 
@@ -97,13 +114,13 @@ export default class scene_1 extends Phaser.Scene {
        
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(590, 450 , "SpriteCaillou").setImmovable(true)
+        this.SpriteCaillou = this.physics.add.sprite(430, 480 , "SpriteCaillou").setImmovable(true)
         
 
         
     //Position joueur
-        this.player = this.physics.add.sprite(300, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
-        this.playerDeux = this.physics.add.sprite(500, 480, "SpriteGrandRenard");
+        this.player = this.physics.add.sprite(350, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
+        this.playerDeux = this.physics.add.sprite(230, 480, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100);
         
@@ -270,6 +287,16 @@ export default class scene_1 extends Phaser.Scene {
         }
     }
 
+
+/*
+
+    if (this.player.y > this.SpriteCaillou.y)
+{
+    this.SpriteCaillou.setVelocityX(0)
+}
+*/
+
+// BOUGER LA BOX AHHH
     PossibiliteDeBougerLaBox(playerDeux, SpriteCaillou){
         console.log("Pourquoi");
         if (this.playerDeux.x > this.SpriteCaillou.x){
@@ -283,6 +310,7 @@ export default class scene_1 extends Phaser.Scene {
             this.SpriteCaillouGoToLeft = false;
         }
 
+        
     }
         
 }
