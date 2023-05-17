@@ -67,12 +67,17 @@ export default class scene_1 extends Phaser.Scene {
 
     }
     create(){
+        this.PossibiliteDeBougerLeCaillou = false;
 
+        this.SpriteHitboxVideGauche = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(16, 50);
+        this.SpriteHitboxVideGauche.body.allowGravity = false;
+        this.PossibiliteDeBougerLaBoxAGauche = false;
+
+        this.SpriteHitboxVideDroite = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(16, 50);
+        this.SpriteHitboxVideDroite.body.allowGravity = false;
+        this.PossibiliteDeBougerLaBoxADroite = false;
 
     //bouger box
-
-        this.SpriteCaillouGoToRight = false;
-        this.SpriteCaillouGoToLeft = false;
 
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
@@ -130,7 +135,9 @@ export default class scene_1 extends Phaser.Scene {
     //Collisions
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
+        this.SpriteHitboxVide
 
+        //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
         this.physics.add.collider(this.chasseur, sol);
@@ -176,7 +183,33 @@ export default class scene_1 extends Phaser.Scene {
     
 //POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
-    update(){    
+    update(){ 
+        
+        if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
+            this.PossibiliteDeBougerLaBoxADroite = true;
+        }
+        else if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideDroite)){
+            this.PossibiliteDeBougerLaBoxAGauche = true;
+        }
+        else{
+            this.PossibiliteDeBougerLaBoxADroite = false;
+            this.PossibiliteDeBougerLaBoxAGauche = false;
+        }
+
+        if(this.clavier.Q.isDown || this.cursors.left.isDown && this.PossibiliteDeBougerLaBoxAGauche == true){
+            this.SpriteCaillou.setVelocityX(-140);
+        }
+        if(this.clavier.D.isDown || this.cursors.right.isDown && this.PossibiliteDeBougerLaBoxADroite == true){
+            this.SpriteCaillou.setVelocityX(140);
+        }
+        
+        // if ouais tu overlap et bah tu met la variable de deplacement en true
+
+        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 40;
+        this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
+
+        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 40;
+        this.SpriteHitboxVideGauche.y = this.SpriteCaillou.y
 
 
 //LANCEMENT CHRONO ATTENTE POUR F------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -223,7 +256,7 @@ export default class scene_1 extends Phaser.Scene {
 
 
 // Déplacement du Joueur 2
-        if (this.cursors.left.isDown && this.SpriteCaillouGoToLeft == true){
+        if (this.cursors.left.isDown && this.PossibiliteDeBougerLeCaillou == true){
             this.SpriteCaillou.setVelocityX(-150);
         }
         else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
@@ -295,23 +328,6 @@ export default class scene_1 extends Phaser.Scene {
     this.SpriteCaillou.setVelocityX(0)
 }
 */
-
-// BOUGER LA BOX AHHH
-    PossibiliteDeBougerLaBox(playerDeux, SpriteCaillou){
-        console.log("Pourquoi");
-        if (this.playerDeux.x > this.SpriteCaillou.x){
-            this.SpriteCaillouGoToLeft = true;
-        }
-        else if (this.playerDeux.x < this.SpriteCaillou.x){
-            this.SpriteCaillouGoToRight = true;
-        }
-        else{
-            this.SpriteCaillouGoToRight = false;
-            this.SpriteCaillouGoToLeft = false;
-        }
-
-        
-    }
         
 }
 
