@@ -17,7 +17,6 @@ export default class scene_1 extends Phaser.Scene {
 // A MODIFIER 
 // saut des 2 renards 
 //fluidité des controles 
-//mon ptn de bloc
 
 
 // ennemis 
@@ -67,6 +66,9 @@ export default class scene_1 extends Phaser.Scene {
 
     }
     create(){
+
+
+    //CA CAILLOU
         this.PossibiliteDeBougerLeCaillou = false;
 
         this.SpriteHitboxVideGauche = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(16, 50);
@@ -85,6 +87,8 @@ export default class scene_1 extends Phaser.Scene {
         this.hp = 3; 
         this.invincible = false;  
         this.invincibleFrame = 60; 
+
+   //     this.player.wallJumping = true;
 
 
         this.LancementAttenteF = false
@@ -185,6 +189,9 @@ export default class scene_1 extends Phaser.Scene {
 
     update(){ 
         
+       
+
+        //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
             this.PossibiliteDeBougerLaBoxADroite = true;
         }
@@ -253,6 +260,45 @@ export default class scene_1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
         }
+////////////////////////////////
+/*
+
+        if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
+            if (this.player.wallJumping == true) {
+
+                this.player.wallJumping = false;
+
+                this.time.delayedCall(500, () => {
+                    this.cdWallJump(); 
+                });
+           
+                this.player.setVelocityY(-200);
+                
+                
+            }
+        }
+        
+        if (this.cursors.up.isDown && this.player.body.blocked.left || this.clavier.SPACE.isDown && this.player.body.blocked.left) {
+            if (this.player.wallJumping == true) {
+
+                this.player.wallJumping = false;
+
+                this.time.delayedCall(500, () => {
+                    this.cdWallJump(); 
+                });
+
+                this.player.setVelocityY(-200);
+               
+            }    
+        }
+
+        cdWallJump() {
+            this.player.wallJumping = true;
+        }
+    
+        
+
+        */
 
 
 // Déplacement du Joueur 2
@@ -321,14 +367,6 @@ export default class scene_1 extends Phaser.Scene {
     }
 
 
-/*
-
-    if (this.player.y > this.SpriteCaillou.y)
-{
-    this.SpriteCaillou.setVelocityX(0)
-}
-*/
-        
 }
 
 
