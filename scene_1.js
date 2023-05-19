@@ -9,6 +9,7 @@ export default class scene_1 extends Phaser.Scene {
 }
 
 //MANQUE : ----------------------------------------------
+//CA MARCHE PLUS NIQUE TILED
 //MÉCANIQUES : 
 //wall jump petit
 //baisser petit
