@@ -88,7 +88,7 @@ export default class scene_1 extends Phaser.Scene {
         this.invincible = false;  
         this.invincibleFrame = 60; 
 
-        this.player.wallJumping = true;
+      //  this.player.wallJumping = true;
 
 
         this.LancementAttenteF = false
@@ -177,8 +177,8 @@ export default class scene_1 extends Phaser.Scene {
 
 
     //Redimensions du jeu selon le fichier Tiled
-        this.physics.world.setBounds(0, 0, 3200, 1600);
-        this.cameras.main.setBounds(0, 0, 3200, 1600);
+        this.physics.world.setBounds(0, 0, 896, 448);
+        this.cameras.main.setBounds(0, 0, 896, 448);
         
 
     }
@@ -260,8 +260,8 @@ export default class scene_1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
         }
-////////////////////////////////
-
+////////////////////////////////WOOOOOO JE VAIS PETER MON CRANE LA 
+/*
 
         if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
             if (this.player.wallJumping == true) {
@@ -282,7 +282,6 @@ export default class scene_1 extends Phaser.Scene {
             if (this.player.wallJumping == true) {
 
                 this.player.wallJumping = false;
-                setTimeout(cdWallJump, 500);
 
                 this.time.delayedCall(500, () => {
                     this.cdWallJump(); 
@@ -293,9 +292,11 @@ export default class scene_1 extends Phaser.Scene {
             }    
         }
 
+        cdWallJump() {
+            this.player.wallJumping = true;
+        }
     
-    
-        
+        */
 
         
 
