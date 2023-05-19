@@ -88,7 +88,7 @@ export default class scene_1 extends Phaser.Scene {
         this.invincible = false;  
         this.invincibleFrame = 60; 
 
-   //     this.player.wallJumping = true;
+        this.player.wallJumping = true;
 
 
         this.LancementAttenteF = false
@@ -261,7 +261,7 @@ export default class scene_1 extends Phaser.Scene {
             this.player.setVelocityY(-300); 
         }
 ////////////////////////////////
-/*
+
 
         if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
             if (this.player.wallJumping == true) {
@@ -282,6 +282,7 @@ export default class scene_1 extends Phaser.Scene {
             if (this.player.wallJumping == true) {
 
                 this.player.wallJumping = false;
+                setTimeout(cdWallJump, 500);
 
                 this.time.delayedCall(500, () => {
                     this.cdWallJump(); 
@@ -292,13 +293,11 @@ export default class scene_1 extends Phaser.Scene {
             }    
         }
 
-        cdWallJump() {
-            this.player.wallJumping = true;
-        }
+    
     
         
 
-        */
+        
 
 
 // Déplacement du Joueur 2
