@@ -42,19 +42,13 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('hp2', 'assets/hp2.png');
         this.load.image('hp3', 'assets/hp3.png');
 
-        this.load.image('pousse', 'assets/pousse.png');
+        this.load.image('chasseur', 'assets/chasseur.png');
+        this.load.image('doggo', 'assets/doggo.png');
+       
 
-        this.load.spritesheet('chasseur', 'assets/chasseur.png',
-        { frameWidth: 263, frameHeight:415});
-
-        this.load.spritesheet('doggo', 'assets/doggo.png',
-        { frameWidth: 78, frameHeight:52});
-
-        this.load.spritesheet('renard_idle', 'assets/renard_idle.png',
-        { frameWidth: 519, frameHeight:429});
-
-        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
-        { frameWidth: 743, frameHeight:577});
+        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png');
+        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
+     
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
@@ -113,30 +107,22 @@ export default class scene_1 extends Phaser.Scene {
 
 
 // CRÉATION OBJETs AVEC TILED-----------------------------------------------------------------------------------------------
-        this.box = this.physics.add.group({ allowGravity: false, allowDrag: true, friction: 1, collideWorldBounds: true});
-        map.getObjectLayer('box').objects.forEach((obj) => {
-
-            //console.log('yo')
-            //console.log(obj.x,obj.y)
-            const box = this.box.create(obj.x, obj.y, 'pousse').setOrigin(0);
-            
-        });
-       
+ 
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(430, 480 , "SpriteCaillou").setImmovable(true)
+        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true)
         
 
         
     //Position joueur
-        this.player = this.physics.add.sprite(350, 480 , "renard_idle"); // 0, 330, ici je change la position de mes chara
-        this.playerDeux = this.physics.add.sprite(230, 480, "SpriteGrandRenard");
+        this.player = this.physics.add.sprite(350, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100);
         
 
-        this.chasseur = this.physics.add.sprite(1200, 250, "chasseur");
-        this.doggo = this.physics.add.sprite(1220, 250, "doggo");
+        //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
+        //this.doggo = this.physics.add.sprite(500, 300, "doggo");
     //Collisions
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
@@ -153,6 +139,7 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.box);
         this.physics.add.collider(this.playerDeux, this.box);
 
+
         this.physics.add.collider(this.SpriteCaillou, sol);
     //collisions renard et box
         this.physics.add.collider(this.player, this.SpriteCaillou);
@@ -160,7 +147,7 @@ export default class scene_1 extends Phaser.Scene {
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.chasseur, this.doggo, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.chasseur, this.loseHp, null, this);
 
      
 
@@ -170,7 +157,7 @@ export default class scene_1 extends Phaser.Scene {
         this.hpUI = this.add.image(10,10, "hp3").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
-    //Clavier
+    //Clavier 
         this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
         this.cursors = this.input.keyboard.createCursorKeys();
         
@@ -181,7 +168,6 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, 896, 448);
         this.cameras.main.setBounds(0, 0, 896, 448);
         
-
     }
 
 
@@ -189,8 +175,6 @@ export default class scene_1 extends Phaser.Scene {
 //POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
     update(){ 
-        
-       
 
         //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
