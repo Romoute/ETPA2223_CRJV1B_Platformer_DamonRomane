@@ -37,6 +37,7 @@ export default class scene_1 extends Phaser.Scene {
     }
 
     preload(){
+        
     //preload assets : barre de vie
         this.load.image('hp1', 'assets/hp1.png');
         this.load.image('hp2', 'assets/hp2.png');
@@ -94,15 +95,18 @@ export default class scene_1 extends Phaser.Scene {
         const map = this.add.tilemap("scene_1");
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
-        const tileset = map.addTilesetImage("tileset_1", "Tileset");
+        const tileset = map.addTilesetImage(
+            "tileset_1", 
+            "Tileset"
+            );
 
         const background = map.createLayer(
             "background",
-            tileset
+            tileset,
         );
         const sol = map.createLayer(
             "sol",
-            tileset
+            tileset,
         );
 
 
@@ -110,7 +114,7 @@ export default class scene_1 extends Phaser.Scene {
  
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true)
+        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
         
 
         
@@ -123,10 +127,8 @@ export default class scene_1 extends Phaser.Scene {
 
         //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
         //this.doggo = this.physics.add.sprite(500, 300, "doggo");
-    //Collisions
-        sol.setCollisionByExclusion(-1, true);
-        background.setCollisionByExclusion(-1, true);
-        this.SpriteHitboxVide
+    
+        //this.SpriteHitboxVide
 
         //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
@@ -139,6 +141,11 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.box);
         this.physics.add.collider(this.playerDeux, this.box);
 
+        //Collisions
+        //sol.setCollisionByProperty({estSolide : true});
+        sol.setCollisionByExclusion(-1, true);
+        background.setCollisionByExclusion(-1, true);
+
 
         this.physics.add.collider(this.SpriteCaillou, sol);
     //collisions renard et box
@@ -147,7 +154,7 @@ export default class scene_1 extends Phaser.Scene {
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.chasseur, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.loseHp, null, this);
 
      
 
@@ -195,7 +202,6 @@ export default class scene_1 extends Phaser.Scene {
             this.SpriteCaillou.setVelocityX(140);
         }
         
-        // if ouais tu overlap et bah tu met la variable de deplacement en true
 
         this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 40;
         this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
