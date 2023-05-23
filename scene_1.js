@@ -75,7 +75,7 @@ export default class scene_1 extends Phaser.Scene {
         this.SpriteHitboxVideDroite.body.allowGravity = false;
         this.PossibiliteDeBougerLaBoxADroite = false;
 
-    //bouger box
+
 
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
@@ -133,13 +133,13 @@ export default class scene_1 extends Phaser.Scene {
         //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
-        this.physics.add.collider(this.chasseur, sol);
-        this.physics.add.collider(this.doggo, sol);
-        this.physics.add.collider(this.box, sol);
+        //this.physics.add.collider(this.chasseur, sol);
+        //this.physics.add.collider(this.doggo, sol);
+        this.player.setCollideWorldBounds(true);
+        this.playerDeux.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.playerDeux);
         this.physics.add.collider(this.playerDeux, this.player);
-        this.physics.add.collider(this.player, this.box);
-        this.physics.add.collider(this.playerDeux, this.box);
+      
 
         //Collisions
         //sol.setCollisionByProperty({estSolide : true});
@@ -174,6 +174,11 @@ export default class scene_1 extends Phaser.Scene {
     //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 896, 448);
         this.cameras.main.setBounds(0, 0, 896, 448);
+
+
+        //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
+
+        //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
     }
 
