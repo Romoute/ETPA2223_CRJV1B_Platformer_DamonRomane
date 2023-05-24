@@ -9,14 +9,11 @@ export default class scene_1 extends Phaser.Scene {
 }
 
 //MANQUE : ----------------------------------------------
-//CA MARCHE PLUS NIQUE TILED
 //MÉCANIQUES : 
-//wall jump petit
 //baisser petit
 //attaque grand
 ////////////////////
 // A MODIFIER 
-// saut des 2 renards 
 //fluidité des controles 
 
 
@@ -40,8 +37,8 @@ export default class scene_1 extends Phaser.Scene {
         
     //preload assets : barre de vie
         this.load.image('hp1', 'assets/hp1.png');
-        this.load.image('hp2', 'assets/hp2.png');
-        this.load.image('hp3', 'assets/hp3.png');
+        //this.load.image('hp2', 'assets/hp2.png');
+        //this.load.image('hp3', 'assets/hp3.png');
 
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
@@ -80,11 +77,11 @@ export default class scene_1 extends Phaser.Scene {
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
         this.direction = "left"; 
-        this.hp = 3; 
+        this.hp = 1; 
         this.invincible = false;  
         this.invincibleFrame = 60; 
 
-      //  this.player.wallJumping = true;
+  
 
 
         this.LancementAttenteF = false
@@ -126,9 +123,9 @@ export default class scene_1 extends Phaser.Scene {
         
 
         //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
-        //this.doggo = this.physics.add.sprite(500, 300, "doggo");
+        //this.doggo = this.physics.add.sprite(530, 300, "doggo");
     
-        //this.SpriteHitboxVide
+     
 
         //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
@@ -137,8 +134,8 @@ export default class scene_1 extends Phaser.Scene {
         //this.physics.add.collider(this.doggo, sol);
         this.player.setCollideWorldBounds(true);
         this.playerDeux.setCollideWorldBounds(true);
-        this.physics.add.collider(this.player, this.playerDeux);
-        this.physics.add.collider(this.playerDeux, this.player);
+        //this.physics.add.collider(this.player, this.playerDeux);
+        //this.physics.add.collider(this.playerDeux, this.player);
       
 
         //Collisions
@@ -161,12 +158,14 @@ export default class scene_1 extends Phaser.Scene {
         
         
     //hpUI
-        this.hpUI = this.add.image(10,10, "hp3").setOrigin(0,0);
+        this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
     //Clavier 
         this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.player.wallJumping = true; 
         
 
 
@@ -256,15 +255,15 @@ export default class scene_1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
         }
-////////////////////////////////WOOOOOO JE VAIS PETER MON CRANE LA 
-/*
+//WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
         if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
             if (this.player.wallJumping == true) {
 
                 this.player.wallJumping = false;
 
-                this.time.delayedCall(500, () => {
+                this.time.delayedCall(700, () => {
                     this.cdWallJump(); 
                 });
            
@@ -279,7 +278,7 @@ export default class scene_1 extends Phaser.Scene {
 
                 this.player.wallJumping = false;
 
-                this.time.delayedCall(500, () => {
+                this.time.delayedCall(700, () => {
                     this.cdWallJump(); 
                 });
 
@@ -287,15 +286,9 @@ export default class scene_1 extends Phaser.Scene {
                
             }    
         }
-
-        cdWallJump() {
-            this.player.wallJumping = true;
-        }
-    
-        */
-
         
-
+    
+    
 
 // Déplacement du Joueur 2
         if (this.cursors.left.isDown && this.PossibiliteDeBougerLeCaillou == true){
@@ -324,7 +317,7 @@ export default class scene_1 extends Phaser.Scene {
 
 //INVULNERABLE------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (this.invincible){
-            console.log(this.invincibleFrame); 
+            //console.log(this.invincibleFrame); 
             this.invincibleFrame-- ;
             if(this.invincibleFrame <= 0){
                     this.invincibleFrame = 60;
@@ -336,12 +329,7 @@ export default class scene_1 extends Phaser.Scene {
 
 //UI HP-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
        
-        if(this.hp == 3){
-            this.hpUI.setTexture("hp3");
-        }
-        if(this.hp == 2){
-            this.hpUI.setTexture("hp2");
-        }
+        
         if(this.hp  == 1){
             this.hpUI.setTexture("hp1");
             
@@ -354,7 +342,7 @@ export default class scene_1 extends Phaser.Scene {
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
-            console.log("Bonjour");
+            //console.log("Bonjour");
             this.invincible = true;
             this.hp -= 1;
             this.player.setTint(0xff0000);
@@ -362,6 +350,14 @@ export default class scene_1 extends Phaser.Scene {
         }
     }
 
+
+
+
+    
+
+    cdWallJump() {
+        this.player.wallJumping = true;
+    }
 
 }
 
