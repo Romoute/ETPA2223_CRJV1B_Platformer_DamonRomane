@@ -37,6 +37,7 @@ export default class scene_1 extends Phaser.Scene {
     }
 
     preload(){
+        
     //preload assets : barre de vie
         this.load.image('hp1', 'assets/hp1.png');
         this.load.image('hp2', 'assets/hp2.png');
@@ -74,7 +75,7 @@ export default class scene_1 extends Phaser.Scene {
         this.SpriteHitboxVideDroite.body.allowGravity = false;
         this.PossibiliteDeBougerLaBoxADroite = false;
 
-    //bouger box
+
 
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
@@ -94,15 +95,18 @@ export default class scene_1 extends Phaser.Scene {
         const map = this.add.tilemap("scene_1");
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
-        const tileset = map.addTilesetImage("tileset_1", "Tileset");
+        const tileset = map.addTilesetImage(
+            "tileset_1", 
+            "Tileset"
+            );
 
         const background = map.createLayer(
             "background",
-            tileset
+            tileset,
         );
         const sol = map.createLayer(
             "sol",
-            tileset
+            tileset,
         );
 
 
@@ -110,7 +114,7 @@ export default class scene_1 extends Phaser.Scene {
  
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true)
+        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
         
 
         
@@ -123,21 +127,24 @@ export default class scene_1 extends Phaser.Scene {
 
         //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
         //this.doggo = this.physics.add.sprite(500, 300, "doggo");
-    //Collisions
-        sol.setCollisionByExclusion(-1, true);
-        background.setCollisionByExclusion(-1, true);
-        this.SpriteHitboxVide
+    
+        //this.SpriteHitboxVide
 
         //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
-        this.physics.add.collider(this.chasseur, sol);
-        this.physics.add.collider(this.doggo, sol);
-        this.physics.add.collider(this.box, sol);
+        //this.physics.add.collider(this.chasseur, sol);
+        //this.physics.add.collider(this.doggo, sol);
+        this.player.setCollideWorldBounds(true);
+        this.playerDeux.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.playerDeux);
         this.physics.add.collider(this.playerDeux, this.player);
-        this.physics.add.collider(this.player, this.box);
-        this.physics.add.collider(this.playerDeux, this.box);
+      
+
+        //Collisions
+        //sol.setCollisionByProperty({estSolide : true});
+        sol.setCollisionByExclusion(-1, true);
+        background.setCollisionByExclusion(-1, true);
 
 
         this.physics.add.collider(this.SpriteCaillou, sol);
@@ -147,7 +154,7 @@ export default class scene_1 extends Phaser.Scene {
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.chasseur, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.loseHp, null, this);
 
      
 
@@ -167,6 +174,11 @@ export default class scene_1 extends Phaser.Scene {
     //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 896, 448);
         this.cameras.main.setBounds(0, 0, 896, 448);
+
+
+        //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
+
+        //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
     }
 
@@ -195,7 +207,6 @@ export default class scene_1 extends Phaser.Scene {
             this.SpriteCaillou.setVelocityX(140);
         }
         
-        // if ouais tu overlap et bah tu met la variable de deplacement en true
 
         this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 40;
         this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
