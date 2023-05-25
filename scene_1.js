@@ -64,11 +64,11 @@ export default class scene_1 extends Phaser.Scene {
     //CA CAILLOU
         this.PossibiliteDeBougerLeCaillou = false;
 
-        this.SpriteHitboxVideGauche = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(16, 50);
+        this.SpriteHitboxVideGauche = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(8, 50);
         this.SpriteHitboxVideGauche.body.allowGravity = false;
         this.PossibiliteDeBougerLaBoxAGauche = false;
 
-        this.SpriteHitboxVideDroite = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(16, 50);
+        this.SpriteHitboxVideDroite = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(8, 50);
         this.SpriteHitboxVideDroite.body.allowGravity = false;
         this.PossibiliteDeBougerLaBoxADroite = false;
 
@@ -207,10 +207,10 @@ export default class scene_1 extends Phaser.Scene {
         }
         
 
-        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 40;
+        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 30;
         this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
 
-        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 40;
+        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 30;
         this.SpriteHitboxVideGauche.y = this.SpriteCaillou.y
 
 
