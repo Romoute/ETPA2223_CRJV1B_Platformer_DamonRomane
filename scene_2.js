@@ -1,34 +1,22 @@
-export default class scene_1 extends Phaser.Scene {
+export default class scene_2 extends Phaser.Scene {
 
     constructor(){
 
         super({
-            key: "scene_1"
+            key: "scene_2"
     });
 }
-
-//MANQUE : ----------------------------------------------
-//MÉCANIQUES : 
-//baisser petit
-//attaque grand
-////////////////////
-// A MODIFIER 
-//fluidité des controles 
-
-
-// ennemis 
-
-
-
 
     // ----- INITIALISATION DES DONNEES DU JOUEUR -----
     // A chaque fonction changement de scene on donnera des donnees qui seront transmises a la nouvelle scene
     // pour par exemple donner la position du joueur, ses points de vie, les objets qu'il a en sa possession etc
     init(data) {
+        // Position du sprite joueur
+        //  this.positionX = data.x;
+        //  this.positionY = data.y; 
 
-    // Position du sprite joueur
-    //  this.positionX = data.x;
-    //  this.positionY = data.y; 
+       
+        
     
     }
 
@@ -36,8 +24,7 @@ export default class scene_1 extends Phaser.Scene {
         
     //preload assets : barre de vie
         this.load.image('hp1', 'assets/hp1.png');
-        //this.load.image('hp2', 'assets/hp2.png');
-        //this.load.image('hp3', 'assets/hp3.png');
+
 
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
@@ -47,20 +34,17 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
      
 
-        //Preload de la map
+        //Preload de la map--------
         this.load.image("Tileset", "tileset/tileset_1.png");
         this.load.tilemapTiledJSON("scene_1", 'map/scene_1.json');
+   
 
-        this.load.image("Tileset", "tileset/tileset_2.png");
+        this.load.image("Tileset2", "tileset/tileset_2.png");
         this.load.tilemapTiledJSON("scene_2", 'map/scene_2.json');
-
-       
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
-      
-        
-
+   
     }
     create(){
 
@@ -93,25 +77,20 @@ export default class scene_1 extends Phaser.Scene {
 
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
-        const map = this.add.tilemap("scene_1");
+        const map2 = this.add.tilemap("scene_2");
 
-        const tileset = map.addTilesetImage(
-            "tileset_1", 
-            "Tileset"
+        const tileset2 = map2.addTilesetImage(
+            "tileset_2", 
+            "Tileset2"
             );
 
-        const changementScene = map.createLayer(
-            "changementScene", 
-            tileset, 
-        )
-
-        const background = map.createLayer(
+        const background = map2.createLayer(
             "background",
-            tileset,
+            tileset2,
         );
-        const sol = map.createLayer(
+        const sol = map2.createLayer(
             "sol",
-            tileset,
+            tileset2,
         );
 
 
@@ -119,18 +98,14 @@ export default class scene_1 extends Phaser.Scene {
         this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
 
     //Position Sortie
-        //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
-        
+       
     //Position joueur
-        this.player = this.physics.add.sprite(350, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
-        this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
+        this.player = this.physics.add.sprite(200, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.playerDeux = this.physics.add.sprite(300, 300, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
-
-
-
-//COLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
+//OLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
         //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
         //this.doggo = this.physics.add.sprite(530, 300, "doggo") 
 
@@ -141,7 +116,9 @@ export default class scene_1 extends Phaser.Scene {
         //this.physics.add.collider(this.doggo, sol);
         this.player.setCollideWorldBounds(true);
         this.playerDeux.setCollideWorldBounds(true);
-        //this.physics.add.collider(this.SpriteSortie, sol);
+        //this.physics.add.collider(this.player, this.playerDeux);
+        //this.physics.add.collider(this.playerDeux, this.player);
+      
 
       
 
@@ -162,13 +139,6 @@ export default class scene_1 extends Phaser.Scene {
 
      
 
-
-        changementScene.setCollisionByExclusion(-1, true);
-
-        this.physics.add.collider(this.player && this.playerDeux, changementScene, function(){
-            this.scene.start("scene_2",{
-            });
-        },null, this);
         
         
     //hpUI
@@ -183,26 +153,18 @@ export default class scene_1 extends Phaser.Scene {
         
 
 
-       
-
-
 
     //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 896, 448);
         this.cameras.main.setBounds(0, 0, 896, 448);
 
-     
+
         //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
 
         //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
-
-        
     }
 
-
-    
-//POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
     update(){ 
 
@@ -333,7 +295,6 @@ export default class scene_1 extends Phaser.Scene {
 
         
 
-       
 
 //INVULNERABLE------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         if (this.invincible){
@@ -354,10 +315,11 @@ export default class scene_1 extends Phaser.Scene {
             this.hpUI.setTexture("hp1");
             
         }else if(this.hp <= 0){
-            this.scene.start("scene_1");
+            this.scene.start("scene_2");
         }
-}
-   
+    }
+
+
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
@@ -369,6 +331,11 @@ export default class scene_1 extends Phaser.Scene {
         }
     }
 
+
+
+
+    
+
     cdWallJump() {
         this.player.wallJumping = true;
     }
@@ -376,13 +343,7 @@ export default class scene_1 extends Phaser.Scene {
 }
 
 
-    
 
 
 
-
-
-
-
-
-
+   
