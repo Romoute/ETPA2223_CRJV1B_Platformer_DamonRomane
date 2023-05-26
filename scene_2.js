@@ -42,6 +42,9 @@ export default class scene_2 extends Phaser.Scene {
         this.load.image("Tileset2", "tileset/tileset_2.png");
         this.load.tilemapTiledJSON("scene_2", 'map/scene_2.json');
 
+        this.load.image("Tileset3", "tileset/tileset_3.png");
+        this.load.tilemapTiledJSON("scene_3", 'map/scene_3.json');
+
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
    
@@ -84,6 +87,11 @@ export default class scene_2 extends Phaser.Scene {
             "Tileset2"
             );
 
+        const changementScene2 = map2.createLayer(
+            "changementScene2", 
+            tileset2, 
+        )
+
         const background = map2.createLayer(
             "background",
             tileset2,
@@ -95,7 +103,7 @@ export default class scene_2 extends Phaser.Scene {
 
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
+        this.SpriteCaillou = this.physics.add.sprite(2000, 2000 , "SpriteCaillou").setImmovable(true);
 
     //Position Sortie
        
@@ -159,9 +167,13 @@ export default class scene_2 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 896, 448);
 
 
-        //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
 
-        //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
+        changementScene2.setCollisionByExclusion(-1, true);
+
+        this.physics.add.collider(this.player && this.playerDeux, changementScene2, function(){
+            this.scene.start("scene_3",{
+            });
+        },null, this);
         
     }
 

@@ -1,9 +1,9 @@
-export default class scene_1 extends Phaser.Scene {
+export default class scene_3 extends Phaser.Scene {
 
     constructor(){
 
         super({
-            key: "scene_1"
+            key: "scene_3"
     });
 }
 
@@ -52,7 +52,7 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image("Tileset", "tileset/tileset_1.png");
         this.load.tilemapTiledJSON("scene_1", 'map/scene_1.json');
 
-        this.load.image("Tileset", "tileset/tileset_2.png");
+        this.load.image("Tileset2", "tileset/tileset_2.png");
         this.load.tilemapTiledJSON("scene_2", 'map/scene_2.json');
 
         this.load.image("Tileset3", "tileset/tileset_3.png");
@@ -97,25 +97,20 @@ export default class scene_1 extends Phaser.Scene {
 
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
-        const map = this.add.tilemap("scene_1");
+        const map3 = this.add.tilemap("scene_3");
 
-        const tileset = map.addTilesetImage(
-            "tileset_1", 
-            "Tileset"
+        const tileset3 = map3.addTilesetImage(
+            "tileset_3", 
+            "Tileset3"
             );
 
-        const changementScene = map.createLayer(
-            "changementScene", 
-            tileset, 
-        )
-
-        const background = map.createLayer(
+        const background = map3.createLayer(
             "background",
-            tileset,
+            tileset3,
         );
-        const sol = map.createLayer(
+        const sol = map3.createLayer(
             "sol",
-            tileset,
+            tileset3,
         );
 
 
@@ -166,14 +161,14 @@ export default class scene_1 extends Phaser.Scene {
 
      
 
+/*
+        changementScene3.setCollisionByExclusion(-1, true);
 
-        changementScene.setCollisionByExclusion(-1, true);
-
-        this.physics.add.collider(this.player && this.playerDeux, changementScene, function(){
-            this.scene.start("scene_2",{
+        this.physics.add.collider(this.player && this.playerDeux, changementScene3, function(){
+            this.scene.start("scene_3",{
             });
         },null, this);
-        
+   */     
         
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
@@ -358,7 +353,7 @@ export default class scene_1 extends Phaser.Scene {
             this.hpUI.setTexture("hp1");
             
         }else if(this.hp <= 0){
-            this.scene.start("scene_1");
+            this.scene.start("scene_3");
         }
 }
    
@@ -381,12 +376,6 @@ export default class scene_1 extends Phaser.Scene {
 
 
     
-
-
-
-
-
-
 
 
 

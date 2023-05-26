@@ -9,7 +9,7 @@ import scene_2 from './scene_2.js';
 var config = {
     type: Phaser.AUTO,
     width: 896, height: 448,
-    pixelArt: true,
+    pixelArt: false,
     physics: {
         default: 'arcade',
         arcade: {
