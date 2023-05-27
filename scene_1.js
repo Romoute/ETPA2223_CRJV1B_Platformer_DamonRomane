@@ -198,7 +198,7 @@ export default class scene_1 extends Phaser.Scene {
      
         //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
 
-        //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
+     
         
 
         
@@ -230,10 +230,10 @@ export default class scene_1 extends Phaser.Scene {
         }
         
 
-        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 30;
+        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 50;
         this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
 
-        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 30;
+        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 50;
         this.SpriteHitboxVideGauche.y = this.SpriteCaillou.y
 
 
