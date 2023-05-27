@@ -126,7 +126,7 @@ export default class scene_1 extends Phaser.Scene {
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
     //Position joueur
-        this.player = this.physics.add.sprite(350, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(320, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 

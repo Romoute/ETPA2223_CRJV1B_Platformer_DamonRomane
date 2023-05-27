@@ -152,7 +152,7 @@ export default class scene_2 extends Phaser.Scene {
         changementSceneDeux.setCollisionByExclusion(-1, true);
 
         this.physics.add.collider(this.player && this.playerDeux, changementSceneDeux, function(){
-            this.scene.start("scene_3",{
+            this.scene.start("scene_2",{
             });
         },null, this);
 

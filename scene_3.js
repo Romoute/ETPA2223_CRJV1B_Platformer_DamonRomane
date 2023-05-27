@@ -104,6 +104,11 @@ export default class scene_3 extends Phaser.Scene {
             "Tileset3"
             );
 
+        const changementSceneTrois = map2.createLayer(
+            "changementSceneTrois", 
+            tileset3, 
+        )
+
         const background = map3.createLayer(
             "background",
             tileset3,
@@ -162,9 +167,9 @@ export default class scene_3 extends Phaser.Scene {
      
 
 
-        changementScene3.setCollisionByExclusion(-1, true);
+        changementSceneTrois.setCollisionByExclusion(-1, true);
 
-        this.physics.add.collider(this.player && this.playerDeux, changementScene3, function(){
+        this.physics.add.collider(this.player && this.playerDeux, changementSceneTrois, function(){
             this.scene.start("scene_3",{
             });
         },null, this);
