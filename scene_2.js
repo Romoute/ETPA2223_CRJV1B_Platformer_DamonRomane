@@ -30,7 +30,8 @@ export default class scene_2 extends Phaser.Scene {
         this.load.image('doggo', 'assets/doggo.png');
        
 
-        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png');
+        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png',
+        {frameWidth: 133, frameHeight: 72});
         this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
      
 
@@ -109,11 +110,12 @@ export default class scene_2 extends Phaser.Scene {
        
     //Position joueur
         this.player = this.physics.add.sprite(200, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(300, 300, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
-//OLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
+//COLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
         //this.chasseur = this.physics.add.sprite(500, 250, "chasseur");
         //this.doggo = this.physics.add.sprite(530, 300, "doggo") 
 
@@ -145,6 +147,8 @@ export default class scene_2 extends Phaser.Scene {
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
 
+
+       
      
 
 //CHANGEMENT SCENE
@@ -152,7 +156,7 @@ export default class scene_2 extends Phaser.Scene {
         changementSceneDeux.setCollisionByExclusion(-1, true);
 
         this.physics.add.collider(this.player && this.playerDeux, changementSceneDeux, function(){
-            this.scene.start("scene_2",{
+            this.scene.start("scene_3",{
             });
         },null, this);
 

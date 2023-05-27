@@ -43,8 +43,8 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
        
-
-        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png');
+        this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
+        {frameWidth: 133, frameHeight: 65});
         this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
      
 
@@ -127,6 +127,7 @@ export default class scene_1 extends Phaser.Scene {
         
     //Position joueur
         this.player = this.physics.add.sprite(320, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
