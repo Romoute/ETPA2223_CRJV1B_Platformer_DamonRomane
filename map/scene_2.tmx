@@ -6,7 +6,7 @@
  <tileset firstgid="1" name="tileset_2" tilewidth="32" tileheight="32" tilecount="392" columns="28">
   <image source="../tileset/tileset_2.png" width="896" height="448"/>
  </tileset>
- <layer id="3" name="changementScene2" width="28" height="14">
+ <layer id="3" name="changementSceneDeux" width="28" height="14">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

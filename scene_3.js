@@ -161,14 +161,14 @@ export default class scene_3 extends Phaser.Scene {
 
      
 
-/*
+
         changementScene3.setCollisionByExclusion(-1, true);
 
         this.physics.add.collider(this.player && this.playerDeux, changementScene3, function(){
             this.scene.start("scene_3",{
             });
         },null, this);
-   */     
+        
         
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);

@@ -87,8 +87,8 @@ export default class scene_2 extends Phaser.Scene {
             "Tileset2"
             );
 
-        const changementScene2 = map2.createLayer(
-            "changementScene2", 
+        const changementSceneDeux = map2.createLayer(
+            "changementSceneDeux", 
             tileset2, 
         )
 
@@ -147,7 +147,16 @@ export default class scene_2 extends Phaser.Scene {
 
      
 
-        
+//CHANGEMENT SCENE
+
+        changementSceneDeux.setCollisionByExclusion(-1, true);
+
+        this.physics.add.collider(this.player && this.playerDeux, changementSceneDeux, function(){
+            this.scene.start("scene_3",{
+            });
+        },null, this);
+
+
         
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
@@ -168,12 +177,7 @@ export default class scene_2 extends Phaser.Scene {
 
 
 
-        changementScene2.setCollisionByExclusion(-1, true);
-
-        this.physics.add.collider(this.player && this.playerDeux, changementScene2, function(){
-            this.scene.start("scene_3",{
-            });
-        },null, this);
+        
         
     }
 
