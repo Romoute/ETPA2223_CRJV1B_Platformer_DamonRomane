@@ -23,8 +23,6 @@ export default class scene_3 extends Phaser.Scene {
 
 
     // ----- INITIALISATION DES DONNEES DU JOUEUR -----
-    // A chaque fonction changement de scene on donnera des donnees qui seront transmises a la nouvelle scene
-    // pour par exemple donner la position du joueur, ses points de vie, les objets qu'il a en sa possession etc
     init(data) {
 
     // Position du sprite joueur
@@ -57,6 +55,9 @@ export default class scene_3 extends Phaser.Scene {
 
         this.load.image("Tileset3", "tileset/tileset_3.png");
         this.load.tilemapTiledJSON("scene_3", 'map/scene_3.json');
+        
+        this.load.image("Tileset4", "tileset/tileset_4.png");
+        this.load.tilemapTiledJSON("scene_4", 'map/scene_4.json');
 
        
 
@@ -104,7 +105,7 @@ export default class scene_3 extends Phaser.Scene {
             "Tileset3"
             );
 
-        const changementSceneTrois = map2.createLayer(
+        const changementSceneTrois = map3.createLayer(
             "changementSceneTrois", 
             tileset3, 
         )
@@ -146,6 +147,7 @@ export default class scene_3 extends Phaser.Scene {
         //this.physics.add.collider(this.doggo, sol);
         this.player.setCollideWorldBounds(true);
         this.playerDeux.setCollideWorldBounds(true);
+        this.SpriteCaillou.setCollideWorldBounds(true);
         //this.physics.add.collider(this.SpriteSortie, sol);
 
       
@@ -231,10 +233,10 @@ export default class scene_3 extends Phaser.Scene {
         }
         
 
-        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 30;
+        this.SpriteHitboxVideDroite.x = this.SpriteCaillou.x + 50;
         this.SpriteHitboxVideDroite.y = this.SpriteCaillou.y
 
-        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 30;
+        this.SpriteHitboxVideGauche.x = this.SpriteCaillou.x - 50;
         this.SpriteHitboxVideGauche.y = this.SpriteCaillou.y
 
 

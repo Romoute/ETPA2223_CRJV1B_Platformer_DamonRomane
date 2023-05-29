@@ -46,8 +46,17 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":28,
          "firstgid":1,
-         "source":"..\/tileset\/tileset_3.tsx"
+         "image":"..\/tileset\/tileset_3.png",
+         "imageheight":448,
+         "imagewidth":896,
+         "margin":0,
+         "name":"tileset_3",
+         "spacing":0,
+         "tilecount":392,
+         "tileheight":32,
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",

@@ -175,11 +175,11 @@ export default class scene_1 extends Phaser.Scene {
             });
         },null, this);
         
-        
+        /*
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
-        
+        */
     //Clavier 
         this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
         this.cursors = this.input.keyboard.createCursorKeys();
