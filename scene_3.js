@@ -127,9 +127,10 @@ export default class scene_3 extends Phaser.Scene {
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
     //Position joueur
-        this.player = this.physics.add.sprite(350, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(150, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
-        this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
+        this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
+        this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
@@ -173,7 +174,7 @@ export default class scene_3 extends Phaser.Scene {
         changementSceneTrois.setCollisionByExclusion(-1, true);
 
         this.physics.add.collider(this.player && this.playerDeux, changementSceneTrois, function(){
-            this.scene.start("scene_3",{
+            this.scene.start("scene_4",{
             });
         },null, this);
         

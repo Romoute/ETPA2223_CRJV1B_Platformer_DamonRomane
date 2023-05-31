@@ -17,6 +17,8 @@ export default class scene_1 extends Phaser.Scene {
 //fluidité des controles 
 
 
+//DANS CHAQUE SCENE NE PAS OUBLIER D AJOUTER A CHAQUE FOIS LE CHANGEMENT DES HITBOXs, saut, 
+
 // ennemis 
 
 
@@ -39,6 +41,7 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('hp1', 'assets/hp1.png');
         //this.load.image('hp2', 'assets/hp2.png');
         //this.load.image('hp3', 'assets/hp3.png');
+        
 
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
@@ -58,10 +61,15 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image("Tileset3", "tileset/tileset_3.png");
         this.load.tilemapTiledJSON("scene_3", 'map/scene_3.json');
 
+        this.load.image("Tileset4", "tileset/tileset_4.png");
+        this.load.tilemapTiledJSON("scene_4", 'map/scene_4.json');
+
        
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
+        this.load.image('SpriteBouton', 'assets/SpriteBouton.png');
+        this.load.image('SpritePorte', 'assets/SpritePorte.png');
       
         
 
@@ -69,7 +77,19 @@ export default class scene_1 extends Phaser.Scene {
     create(){
 
 
+
+
+        this.anims.create({
+            key : "idle",
+            frameRate: 12,
+            frames: this.anims.generateFrameNumbers("SpritePetitRenard", { start: 2, end: 11 }),
+            repeat: 1
+        });
+
     //CA CAILLOU
+        
+
+
         this.PossibiliteDeBougerLeCaillou = false;
 
         this.SpriteHitboxVideGauche = this.physics.add.sprite(0, 0, 'SpriteHitbox').setSize(8, 40);
@@ -94,6 +114,11 @@ export default class scene_1 extends Phaser.Scene {
 // Si je veux modifier le temps entre chaque Swap de player
         this.LancementAttenteF = false
         this.AttenteF = 40;
+
+
+    //Clavier 
+        this.clavier = this.input.keyboard.addKeys('F,Q,D,C,SPACE');
+        this.cursors = this.input.keyboard.createCursorKeys();
 
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
@@ -122,6 +147,9 @@ export default class scene_1 extends Phaser.Scene {
     //Position box
         this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
 
+        this.SpritePorte = this.physics.add.sprite(600, 200 , "SpritePorte").setImmovable(true);
+        this.SpriteBouton = this.physics.add.sprite(150, 300 , "SpriteBouton").setImmovable(true);
+
     //Position Sortie
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
@@ -129,10 +157,13 @@ export default class scene_1 extends Phaser.Scene {
         this.player = this.physics.add.sprite(320, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
+        this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
 
+
+        
 
 
 //COLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,29 +173,46 @@ export default class scene_1 extends Phaser.Scene {
         //this.physics.add.overlap(this.playerDeux, this.this.SpriteHitboxVide, DeplacementTrue(), null, this);
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
-        //this.physics.add.collider(this.chasseur, sol);
-        //this.physics.add.collider(this.doggo, sol);
+
+
+        this.physics.add.collider(this.SpriteBouton, sol);
+        this.physics.add.collider(this.SpritePorte, sol);
+
+
+
         this.player.setCollideWorldBounds(true);
         this.playerDeux.setCollideWorldBounds(true);
-        //this.physics.add.collider(this.SpriteSortie, sol);
+   
 
       
 
-        
-        //sol.setCollisionByProperty({estSolide : true});
         sol.setCollisionByExclusion(-1, true);
         background.setCollisionByExclusion(-1, true);
 
 
         this.physics.add.collider(this.SpriteCaillou, sol);
+
+
+        //this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
     //collisions renard et box
         this.physics.add.collider(this.player, this.SpriteCaillou);
         this.physics.add.collider(this.playerDeux, this.SpriteCaillou, this.PossibiliteDeBougerLaBox, null, this);
         
 
+    //collisions porte/boutons et joueurs
+        this.physics.add.collider(this.player, this.SpritePorte);
+        this.physics.add.collider(this.playerDeux, this.SpritePorte);
+
+   
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
-
+        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
+            if (this.clavier.C.isDown){
+                this.SpritePorte.destroy();
+                
+            }
+        }, null, this);
+       
      
 
 
@@ -175,14 +223,12 @@ export default class scene_1 extends Phaser.Scene {
             });
         },null, this);
         
-        /*
+        
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
-        */
-    //Clavier 
-        this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
-        this.cursors = this.input.keyboard.createCursorKeys();
+        
+    
 
         this.player.wallJumping = true; 
         
@@ -378,16 +424,16 @@ export default class scene_1 extends Phaser.Scene {
         this.player.wallJumping = true;
     }
 
-}
 
+
+    ouvrePorte() {
+        
+
+
+    }
+}
 
     
 
 
-
-
-
-
-
-
-
+    

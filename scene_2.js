@@ -45,6 +45,11 @@ export default class scene_2 extends Phaser.Scene {
 
         this.load.image("Tileset3", "tileset/tileset_3.png");
         this.load.tilemapTiledJSON("scene_3", 'map/scene_3.json');
+        
+        this.load.image("Tileset4", "tileset/tileset_4.png");
+        this.load.tilemapTiledJSON("scene_4", 'map/scene_4.json');
+
+
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
@@ -79,6 +84,10 @@ export default class scene_2 extends Phaser.Scene {
         this.LancementAttenteF = false
         this.AttenteF = 40;
 
+    //Clavier 
+        this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
+        this.cursors = this.input.keyboard.createCursorKeys();
+
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
         const map2 = this.add.tilemap("scene_2");
@@ -109,9 +118,10 @@ export default class scene_2 extends Phaser.Scene {
     //Position Sortie
        
     //Position joueur
-        this.player = this.physics.add.sprite(200, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(150, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
-        this.playerDeux = this.physics.add.sprite(300, 300, "SpriteGrandRenard");
+        this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
+        this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
@@ -142,6 +152,24 @@ export default class scene_2 extends Phaser.Scene {
     //collisions renard et box
         this.physics.add.collider(this.player, this.SpriteCaillou);
         this.physics.add.collider(this.playerDeux, this.SpriteCaillou, this.PossibiliteDeBougerLaBox, null, this);
+
+    //collisions porte/boutons et joueurs
+        this.physics.add.collider(this.player, this.SpritePorte);
+        this.physics.add.collider(this.playerDeux, this.SpritePorte);
+
+   
+    //this.physics.add.collider(this.player, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.loseHp, null, this);
+        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
+            if (this.clavier.C.isDown){
+                this.SpritePorte.destroy();
+                
+            }
+        }, null, this);
+       
+     
+
+
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
@@ -166,9 +194,7 @@ export default class scene_2 extends Phaser.Scene {
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
-    //Clavier 
-        this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
-        this.cursors = this.input.keyboard.createCursorKeys();
+
 
         this.player.wallJumping = true; 
         
