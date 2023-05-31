@@ -108,15 +108,15 @@ export default class scene_5 extends Phaser.Scene {
         const map5 = this.add.tilemap("scene_5");
 
         const tileset5 = map5.addTilesetImage(
-            "tileset_1", 
-            "Tileset1"
+            "tileset_5", 
+            "Tileset5"
             );
-/*
-        const changementSceneQuatre = map5.createLayer(
-            "changementSceneQuatre", 
+
+        const changementSceneCinq = map5.createLayer(
+            "changementSceneCinq", 
             tileset5, 
         )
-*/
+
         const background = map5.createLayer(
             "background",
             tileset5,
@@ -140,7 +140,7 @@ export default class scene_5 extends Phaser.Scene {
         this.player = this.physics.add.sprite(150, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
-        this.playerDeux.body.setSize(90,81);
+        this.playerDeux.body.setSize(97,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
@@ -208,9 +208,9 @@ export default class scene_5 extends Phaser.Scene {
      
 
 
-        changementSceneQuatre.setCollisionByExclusion(-1, true);
+        changementSceneCinq.setCollisionByExclusion(-1, true);
 
-        this.physics.add.collider(this.player && this.playerDeux, changementSceneQuatre, function(){
+        this.physics.add.collider(this.player && this.playerDeux, changementSceneCinq, function(){
             this.scene.start("scene_5",{
             });
         },null, this);
@@ -231,8 +231,8 @@ export default class scene_5 extends Phaser.Scene {
 
 
     //Redimensions du jeu selon le fichier Tiled
-        this.physics.world.setBounds(0, 0, 896, 448);
-        this.cameras.main.setBounds(0, 0, 896, 448);
+        this.physics.world.setBounds(0, 0, 1600, 1600);
+        this.cameras.main.setBounds(0, 0, 1600, 1600);
 
      
         //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol

@@ -49,6 +49,9 @@ export default class scene_2 extends Phaser.Scene {
         this.load.image("Tileset4", "tileset/tileset_4.png");
         this.load.tilemapTiledJSON("scene_4", 'map/scene_4.json');
 
+        this.load.image("Tileset5", "tileset/tileset_5.png");
+        this.load.tilemapTiledJSON("scene_5", 'map/scene_5.json');
+
 
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
