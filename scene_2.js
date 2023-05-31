@@ -328,7 +328,7 @@ export default class scene_2 extends Phaser.Scene {
             this.playerDeux.setVelocityX(-160); 
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == false || this.clavier.D.isDown && this.IsOnFirstPlayer == false){ 
-            this.playerDeux.setVelocityX(160); 
+            this.playerDeux.setVelocityX(300); 
         }
         else{
             this.playerDeux.setVelocityX(0);

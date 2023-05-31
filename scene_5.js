@@ -1,9 +1,9 @@
-export default class scene_4 extends Phaser.Scene {
+export default class scene_5 extends Phaser.Scene {
 
     constructor(){
 
         super({
-            key: "scene_4"
+            key: "scene_5"
     });
 }
 
@@ -59,6 +59,9 @@ export default class scene_4 extends Phaser.Scene {
         this.load.image("Tileset4", "tileset/tileset_4.png");
         this.load.tilemapTiledJSON("scene_4", 'map/scene_4.json');
 
+        this.load.image("Tileset5", "tileset/tileset_5.png");
+        this.load.tilemapTiledJSON("scene_5", 'map/scene_5.json');
+
        
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
@@ -102,25 +105,25 @@ export default class scene_4 extends Phaser.Scene {
 
 
 //JEU DE TUILE---------------------------------------------------------------------------------------------------------------------------
-        const map4 = this.add.tilemap("scene_4");
+        const map5 = this.add.tilemap("scene_5");
 
-        const tileset4 = map4.addTilesetImage(
-            "tileset_4", 
-            "Tileset4"
+        const tileset5 = map5.addTilesetImage(
+            "tileset_1", 
+            "Tileset1"
             );
-
-        const changementSceneQuatre = map4.createLayer(
+/*
+        const changementSceneQuatre = map5.createLayer(
             "changementSceneQuatre", 
-            tileset4, 
+            tileset5, 
         )
-
-        const background = map4.createLayer(
+*/
+        const background = map5.createLayer(
             "background",
-            tileset4,
+            tileset5,
         );
-        const sol = map4.createLayer(
+        const sol = map5.createLayer(
             "sol",
-            tileset4,
+            tileset5,
         );
 
 

@@ -155,7 +155,7 @@ export default class scene_1 extends Phaser.Scene {
         this.player = this.physics.add.sprite(320, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
-        this.playerDeux.body.setSize(90,81);
+        this.playerDeux.body.setSize(97,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
@@ -202,7 +202,9 @@ export default class scene_1 extends Phaser.Scene {
 
     //collisions perso et champi
         this.physics.add.collider(this.player, this.SpriteChampi);
-        this.physics.add.collider(this.playerDeux, this.SpriteChampi);
+        this.physics.add.collider(this.playerDeux, this.SpriteChampi,(player, champi) => {
+            player.setVelocityY(-200);
+        });
 
         this.physics.add.collider(this.SpriteChampi, sol);
 
@@ -214,10 +216,13 @@ export default class scene_1 extends Phaser.Scene {
 
         changementScene.setCollisionByExclusion(-1, true);
 
-        this.physics.add.collider(this.player && this.playerDeux, changementScene, function(){
-            this.scene.start("scene_2",{
-            });
-        },null, this);
+        this.physics.add.collider([this.player, this.playerDeux], changementScene, (player, changementScene) => {
+            player.hasTouched = true;
+            console.log(player)
+            if(this.player.hasTouched && this.playerDeux.hasTouched){
+                this.scene.start("scene_2");
+            }
+        });
 //-------------------------------------------------------------------------------------------------------------------------------------       
         
     //hpUI
@@ -412,8 +417,3 @@ export default class scene_1 extends Phaser.Scene {
         this.player.setVelocityY(-800);
     }
 }
-
-    
-
-
-    
