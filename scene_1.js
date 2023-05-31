@@ -16,9 +16,6 @@ export default class scene_1 extends Phaser.Scene {
 // A MODIFIER 
 //fluidité des controles 
 
-
-//DANS CHAQUE SCENE NE PAS OUBLIER D AJOUTER A CHAQUE FOIS LE CHANGEMENT DES HITBOXs, saut, 
-
 // ennemis 
 
 
@@ -70,13 +67,14 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
         this.load.image('SpriteBouton', 'assets/SpriteBouton.png');
         this.load.image('SpritePorte', 'assets/SpritePorte.png');
+        this.load.image('SpriteChampi', 'assets/SpriteChampi.png');
       
         
 
     }
     create(){
 
-
+/*
 
 
         this.anims.create({
@@ -85,7 +83,7 @@ export default class scene_1 extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers("SpritePetitRenard", { start: 2, end: 11 }),
             repeat: 1
         });
-
+*/
     //CA CAILLOU
         
 
@@ -147,8 +145,8 @@ export default class scene_1 extends Phaser.Scene {
     //Position box
         this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
 
-        this.SpritePorte = this.physics.add.sprite(600, 200 , "SpritePorte").setImmovable(true);
-        this.SpriteBouton = this.physics.add.sprite(150, 300 , "SpriteBouton").setImmovable(true);
+        this.SpriteChampi = this.physics.add.sprite(600, 300 , "SpriteChampi").setImmovable(true);
+
 
     //Position Sortie
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
@@ -175,8 +173,7 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, sol);
 
 
-        this.physics.add.collider(this.SpriteBouton, sol);
-        this.physics.add.collider(this.SpritePorte, sol);
+        
 
 
 
@@ -200,21 +197,20 @@ export default class scene_1 extends Phaser.Scene {
         
 
     //collisions porte/boutons et joueurs
-        this.physics.add.collider(this.player, this.SpritePorte);
-        this.physics.add.collider(this.playerDeux, this.SpritePorte);
+        
+
+
+    //collisions perso et champi
+        this.physics.add.collider(this.player, this.SpriteChampi);
+        this.physics.add.collider(this.playerDeux, this.SpriteChampi);
+
+        this.physics.add.collider(this.SpriteChampi, sol);
 
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
-            if (this.clavier.C.isDown){
-                this.SpritePorte.destroy();
-                
-            }
-        }, null, this);
-       
      
-
+//CHANGEMENT SCENE----------------------------------------------------------------------------------------------------------------------
 
         changementScene.setCollisionByExclusion(-1, true);
 
@@ -222,7 +218,7 @@ export default class scene_1 extends Phaser.Scene {
             this.scene.start("scene_2",{
             });
         },null, this);
-        
+//-------------------------------------------------------------------------------------------------------------------------------------       
         
     //hpUI
         this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
@@ -233,22 +229,9 @@ export default class scene_1 extends Phaser.Scene {
         this.player.wallJumping = true; 
         
 
-
-       
-
-
-
     //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 896, 448);
-        this.cameras.main.setBounds(0, 0, 896, 448);
-
-     
-        //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
-
-     
-        
-
-        
+        this.cameras.main.setBounds(0, 0, 896, 448);        
     }
 
 
@@ -257,7 +240,7 @@ export default class scene_1 extends Phaser.Scene {
 
     update(){ 
 
-        //CA C EST LE CAILLOU
+        //CA C EST LE CAILLOU (en fait c'est un tronc d'arbre)
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
             this.PossibiliteDeBougerLaBoxADroite = true;
         }
@@ -425,11 +408,8 @@ export default class scene_1 extends Phaser.Scene {
     }
 
 
-
-    ouvrePorte() {
-        
-
-
+    rebond(){
+        this.player.setVelocityY(-800);
     }
 }
 

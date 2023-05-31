@@ -97,7 +97,7 @@ export default class scene_4 extends Phaser.Scene {
         this.AttenteF = 40;
 
     //Clavier 
-        this.clavier = this.input.keyboard.addKeys('F,Q,D,SPACE');
+        this.clavier = this.input.keyboard.addKeys('F,Q,D,C,SPACE');
         this.cursors = this.input.keyboard.createCursorKeys();
 
 
@@ -182,6 +182,12 @@ export default class scene_4 extends Phaser.Scene {
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
+            if (this.clavier.C.isDown){
+                this.SpritePorte.destroy();
+                
+            }
+        }, null, this);
+        this.physics.add.overlap(this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
                 
