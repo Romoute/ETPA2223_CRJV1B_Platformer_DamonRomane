@@ -210,14 +210,16 @@ export default class scene_4 extends Phaser.Scene {
 
         changementSceneQuatre.setCollisionByExclusion(-1, true);
 
-        this.physics.add.collider(this.player && this.playerDeux, changementSceneQuatre, function(){
-            this.scene.start("scene_5",{
-            });
-        },null, this);
         
+        this.physics.add.collider([this.player, this.playerDeux], changementSceneQuatre, (player, changementSceneQuatre) => {
+            player.hasTouched = true;
+            if(this.player.hasTouched && this.playerDeux.hasTouched){
+                this.scene.start("scene_5");
+            }
+        });
         
     //hpUI
-        this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
+        this.hpUI = this.add.image(-100,-100, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
 

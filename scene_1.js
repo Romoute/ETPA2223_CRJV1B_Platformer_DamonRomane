@@ -229,7 +229,7 @@ export default class scene_1 extends Phaser.Scene {
 //-------------------------------------------------------------------------------------------------------------------------------------       
         
     //hpUI
-        this.hpUI = this.add.image(10,10, "hp1").setOrigin(0,0);
+        this.hpUI = this.add.image(-100,-100, "hp1").setOrigin(0,0);
         this.hpUI.setScrollFactor(0);
         
     
