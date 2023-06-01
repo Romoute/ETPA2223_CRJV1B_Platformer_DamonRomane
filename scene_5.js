@@ -130,8 +130,8 @@ export default class scene_5 extends Phaser.Scene {
     //Position box
         this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
     //Position Porte et Bouton 
-        this.SpritePorte = this.physics.add.sprite(736, 200 , "SpritePorte").setImmovable(true);
-        this.SpriteBouton = this.physics.add.sprite(736, 32 , "SpriteBouton").setImmovable(true);
+        this.SpritePorte = this.physics.add.sprite(224, 310 , "SpritePorte").setImmovable(true);
+        this.SpriteBouton = this.physics.add.sprite(128, 576 , "SpriteBouton").setImmovable(true);
 
     //Position Sortie
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
@@ -180,6 +180,8 @@ export default class scene_5 extends Phaser.Scene {
     //collisions porte/boutons et joueurs
         this.physics.add.collider(this.player, this.SpritePorte);
         this.physics.add.collider(this.playerDeux, this.SpritePorte);
+
+        this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
 
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
@@ -329,7 +331,7 @@ export default class scene_5 extends Phaser.Scene {
                     this.cdWallJump(); 
                 });
            
-                this.player.setVelocityY(-200);
+                this.player.setVelocityY(-300);
                 
                 
             }

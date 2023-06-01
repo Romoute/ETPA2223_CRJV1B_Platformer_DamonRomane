@@ -328,7 +328,7 @@ export default class scene_1 extends Phaser.Scene {
                     this.cdWallJump(); 
                 });
            
-                this.player.setVelocityY(-200);
+                this.player.setVelocityY(-300);
                 
                 
             }
@@ -343,7 +343,7 @@ export default class scene_1 extends Phaser.Scene {
                     this.cdWallJump(); 
                 });
 
-                this.player.setVelocityY(-200);
+                this.player.setVelocityY(-300);
                
             }    
         }
