@@ -148,7 +148,7 @@ export default class scene_1 extends Phaser.Scene {
     //Position box
         this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
 
-        this.SpriteChampi = this.physics.add.sprite(600, 300 , "SpriteChampi").setImmovable(true);
+      
 
 
     //Position Sortie
@@ -204,12 +204,7 @@ export default class scene_1 extends Phaser.Scene {
 
 
     //collisions perso et champi
-        this.physics.add.collider(this.player, this.SpriteChampi);
-        this.physics.add.collider(this.playerDeux, this.SpriteChampi,(player, champi) => {
-            player.setVelocityY(-200);
-        });
-
-        this.physics.add.collider(this.SpriteChampi, sol);
+        
 
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
@@ -223,7 +218,7 @@ export default class scene_1 extends Phaser.Scene {
             player.hasTouched = true;
             console.log(player)
             if(this.player.hasTouched && this.playerDeux.hasTouched){
-                this.scene.start("scene_5");
+                this.scene.start("scene_3");
             }
         });
 //-------------------------------------------------------------------------------------------------------------------------------------       
