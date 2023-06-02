@@ -136,7 +136,7 @@ export default class scene_5 extends Phaser.Scene {
 
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(430, 300 , "SpriteCaillou").setImmovable(true);
+        this.SpriteCaillou = this.physics.add.sprite(224, 100 , "SpriteCaillou").setImmovable(true);
 
         this.SpriteChampi = this.physics.add.sprite(1152, 1024 , "SpriteChampi").setImmovable(true);
         this.SpriteChampiUn = this.physics.add.sprite(1216, 1536 , "SpriteChampiUn").setImmovable(true);
@@ -214,6 +214,10 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.collider(this.SpriteChampiUn, sol);
 
 
+
+
+
+
         this.physics.add.collider(this.playerDeux, this.SpriteChampiDeux);
         this.physics.add.collider(this.player, this.SpriteChampiDeux,(player, champi) => {
             player.setVelocityY(-500);
@@ -228,8 +232,6 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, this.SpritePorteRose);
         this.physics.add.collider(this.player, this.SpritePorteVert);
         this.physics.add.collider(this.playerDeux, this.SpritePorteVert);
-
-        this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
 
 
    
@@ -320,6 +322,8 @@ export default class scene_5 extends Phaser.Scene {
 
         //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
+        this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
+
 
         
     }
@@ -496,6 +500,8 @@ export default class scene_5 extends Phaser.Scene {
     cdWallJump() {
         this.player.wallJumping = true;
     }
+
+   
 
 }
 
