@@ -385,10 +385,10 @@ export default class scene_5 extends Phaser.Scene {
         }
 // Déplacement du Joueur 1 
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(-160); 
+            this.player.setVelocityX(-180); 
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(160); 
+            this.player.setVelocityX(180); 
         }
         else{
             this.player.setVelocityX(0);
