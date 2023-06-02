@@ -72,6 +72,9 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('SpritePorte', 'assets/SpritePorte.png');
         this.load.image('SpriteChampi', 'assets/SpriteChampi.png');
       
+
+        this.load.image('SpriteToucheC', 'assets/SpriteToucheC.png');
+        this.load.image('SpriteToucheF', 'assets/SpriteToucheF.png');
         
 
     }
@@ -155,14 +158,18 @@ export default class scene_1 extends Phaser.Scene {
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
     //Position joueur
-        this.player = this.physics.add.sprite(320, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(600, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
         this.playerDeux.body.setSize(97,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
+        
+    //Sprite TOUCHE F
 
+        this.SpriteToucheF = this.physics.add.staticSprite(230, 200, "SpriteToucheF").setSize(700,400);
+        this.SpriteToucheF.setAlpha(0)
 
         
 
@@ -209,6 +216,10 @@ export default class scene_1 extends Phaser.Scene {
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
+        //this.physics.add.overlap(this.player, this.SpriteToucheC);
+        this.physics.add.overlap(this.player, this.SpriteToucheF,this.SpriteF, null, this);
+        //this.physics.add.overlap(this.playerDeux, this.SpriteToucheC);
+        this.physics.add.overlap(this.playerDeux, this.SpriteToucheF);
      
 //CHANGEMENT SCENE----------------------------------------------------------------------------------------------------------------------
 
@@ -218,7 +229,7 @@ export default class scene_1 extends Phaser.Scene {
             player.hasTouched = true;
             console.log(player)
             if(this.player.hasTouched && this.playerDeux.hasTouched){
-                this.scene.start("scene_3");
+                this.scene.start("scene_5");
             }
         });
 //-------------------------------------------------------------------------------------------------------------------------------------       
@@ -255,10 +266,10 @@ export default class scene_1 extends Phaser.Scene {
             this.PossibiliteDeBougerLaBoxAGauche = false;
         }
 
-        if(this.clavier.Q.isDown || this.cursors.left.isDown && this.PossibiliteDeBougerLaBoxAGauche == true){
+        if(this.cursors.left.isDown && this.PossibiliteDeBougerLaBoxAGauche == true){
             this.SpriteCaillou.setVelocityX(-140);
         }
-        if(this.clavier.D.isDown || this.cursors.right.isDown && this.PossibiliteDeBougerLaBoxADroite == true){
+        if(this.cursors.right.isDown && this.PossibiliteDeBougerLaBoxADroite == true){
             this.SpriteCaillou.setVelocityX(140);
         }
         
@@ -298,10 +309,10 @@ export default class scene_1 extends Phaser.Scene {
         }
 // Déplacement du Joueur 1 
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(-160); 
+            this.player.setVelocityX(-200); 
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(160); 
+            this.player.setVelocityX(200); 
         }
         else{
             this.player.setVelocityX(0);
@@ -347,7 +358,7 @@ export default class scene_1 extends Phaser.Scene {
     
 
 // Déplacement du Joueur 2
-        if (this.cursors.left.isDown && this.PossibiliteDeBougerLeCaillou == true){
+        if (this.cursors.left.isDown    && this.PossibiliteDeBougerLeCaillou == true){
             this.SpriteCaillou.setVelocityX(-150);
         }
         else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
@@ -413,5 +424,9 @@ export default class scene_1 extends Phaser.Scene {
 
     rebond(){
         this.player.setVelocityY(-800);
+    }
+
+    SpriteF(){
+        this.SpriteToucheF.setAlpha(1);
     }
 }

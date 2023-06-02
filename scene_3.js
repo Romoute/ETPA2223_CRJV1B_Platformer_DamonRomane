@@ -252,10 +252,10 @@ export default class scene_3 extends Phaser.Scene {
             this.PossibiliteDeBougerLaBoxAGauche = false;
         }
 
-        if(this.clavier.Q.isDown || this.cursors.left.isDown && this.PossibiliteDeBougerLaBoxAGauche == true){
+        if(this.cursors.left.isDown && this.PossibiliteDeBougerLaBoxAGauche == true){
             this.SpriteCaillou.setVelocityX(-140);
         }
-        if(this.clavier.D.isDown || this.cursors.right.isDown && this.PossibiliteDeBougerLaBoxADroite == true){
+        if(this.cursors.right.isDown && this.PossibiliteDeBougerLaBoxADroite == true){
             this.SpriteCaillou.setVelocityX(140);
         }
         
