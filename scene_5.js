@@ -130,13 +130,17 @@ export default class scene_5 extends Phaser.Scene {
 
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(224, 100 , "SpriteCaillou").setImmovable(true);
+        this.SpriteCaillou = this.physics.add.sprite(224, 60 , "SpriteCaillou")
+        this.SpriteHitboxTest = this.physics.add.sprite(224, 300 , "SpriteHitbox").setImmovable(true);
+        this.SpriteHitboxTest.body.allowGravity = false;
+        this.SpriteHitboxTest.setSize(32, 170)
 
         this.SpriteChampi = this.physics.add.sprite(1152, 1024 , "SpriteChampi").setImmovable(true);
         this.SpriteChampiUn = this.physics.add.sprite(1216, 1536 , "SpriteChampiUn").setImmovable(true);
         this.SpriteChampiDeux = this.physics.add.sprite(1280, 864 , "SpriteChampiDeux").setImmovable(true);
     //Position Porte et Bouton 
-        this.SpritePorte = this.physics.add.sprite(224, 310 , "SpritePorte").setImmovable(true);
+        this.SpritePorte = this.physics.add.sprite(224, 220 , "SpritePorte")//.setImmovable(true);
+        this.SpritePorte.body.allowGravity = false;
         this.SpritePorteRose = this.physics.add.sprite(500, 310 , "SpritePorteRose").setImmovable(true);
         this.SpritePorteVert = this.physics.add.sprite(800, 310 , "SpritePorteVert").setImmovable(true);
         this.SpriteBouton = this.physics.add.sprite(128, 576 , "SpriteBouton").setImmovable(true);
@@ -165,10 +169,14 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.collider(this.player, sol);
         this.physics.add.collider(this.playerDeux, sol);
 
+        this.physics.add.collider(this.SpriteHitboxTest, this.SpriteCaillou);
+
+
         this.physics.add.collider(this.SpriteBouton, sol);
         this.physics.add.collider(this.SpriteBoutonRose, sol);
         this.physics.add.collider(this.SpriteBoutonVert, sol);
         this.physics.add.collider(this.SpritePorte, sol);
+        //this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
         this.physics.add.collider(this.SpritePorteRose, sol);
         this.physics.add.collider(this.SpritePorteVert, sol);
         //this.physics.add.collider(this.chasseur, sol);
@@ -234,12 +242,15 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
+                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
         this.physics.add.overlap(this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
+                this.SpriteHitboxTest.destroy();
+                console.log("cc")
                 
             }
         }, null, this);
@@ -327,6 +338,9 @@ export default class scene_5 extends Phaser.Scene {
 //POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
     update(){ 
+
+        this.SpriteHitboxTest.x = this.SpritePorte.x;
+        this.SpriteHitboxTest.y = this.SpritePorte.y;
 
         //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
@@ -493,6 +507,7 @@ export default class scene_5 extends Phaser.Scene {
 
     cdWallJump() {
         this.player.wallJumping = true;
+
     }
 
    
