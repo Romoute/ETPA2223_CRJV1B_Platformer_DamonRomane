@@ -246,11 +246,20 @@ export default class scene_1 extends Phaser.Scene {
     //Redimensions du jeu selon le fichier Tiled
         this.physics.world.setBounds(0, 0, 896, 448);
         this.cameras.main.setBounds(0, 0, 896, 448);        
-    }
-
-
     
-//POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
+
+
+
+
+//ANIMATION-------------------------------------------------------------------------------------------------------------------------------------------
+/*
+        this.anims.create({
+            key: 'IdlePetit',
+            frames: [{ key: 'SpriteIdlePetit', frame: 11 }],
+            frameRate: 20
+        });
+   */
+    }
 
     update(){ 
 
