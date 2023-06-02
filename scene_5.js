@@ -58,12 +58,12 @@ export default class scene_5 extends Phaser.Scene {
 
        
 
-        this.load.spritesheet('SpriteCaillou', 'assets/SpriteCaillou.png');
+        this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
         this.load.image('SpriteBouton', 'assets/SpriteBouton.png');
-        this.load.spritesheet('SpritePorte', 'assets/SpritePorte.png');
-        this.load.spritesheet('SpritePorteRose', 'assets/SpritePorteRose.png');
-        this.load.spritesheet('SpritePorteVert', 'assets/SpritePorteVert.png');
+        this.load.image('SpritePorte', 'assets/SpritePorte.png');
+        this.load.image('SpritePorteRose', 'assets/SpritePorteRose.png');
+        this.load.image('SpritePorteVert', 'assets/SpritePorteVert.png');
         this.load.image('SpriteChampi', 'assets/SpriteChampi.png');
         this.load.image('SpriteChampiUn', 'assets/SpriteChampiUn.png');
         this.load.image('SpriteChampiDeux', 'assets/SpriteChampiDeux.png');
@@ -208,7 +208,6 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.collider(this.SpriteChampiUn, sol);
 
 
-        this.physics.add.collider(this.SpritePorteRose, this.SpriteCaillou);
 
 
 
@@ -272,7 +271,8 @@ export default class scene_5 extends Phaser.Scene {
         }, null, this);
        
        
-
+       
+     
 
 
         
@@ -316,6 +316,8 @@ export default class scene_5 extends Phaser.Scene {
 
         //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
+        this.physics.add.collider(this.SpritePorte, this.SpriteCaillou);
+
 
         
     }
