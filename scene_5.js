@@ -250,7 +250,6 @@ export default class scene_5 extends Phaser.Scene {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
                 this.SpriteHitboxTest.destroy();
-                console.log("cc")
                 
             }
         }, null, this);
@@ -258,12 +257,14 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBoutonRose, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteRose.destroy();
+                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
         this.physics.add.overlap(this.playerDeux, this.SpriteBoutonRose, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteRose.destroy();
+                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
@@ -271,12 +272,14 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBoutonVert, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteVert.destroy();
+                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
         this.physics.add.overlap(this.playerDeux, this.SpriteBoutonVert, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteVert.destroy();
+                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
