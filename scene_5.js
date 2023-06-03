@@ -59,6 +59,7 @@ export default class scene_5 extends Phaser.Scene {
        
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
+        this.load.image('SpriteCaillouDeux', 'assets/SpriteCaillouDeux.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
         this.load.image('SpriteBouton', 'assets/SpriteBouton.png');
         this.load.image('SpritePorte', 'assets/SpritePorte.png');
@@ -130,19 +131,26 @@ export default class scene_5 extends Phaser.Scene {
 
 
     //Position box
-        this.SpriteCaillou = this.physics.add.sprite(224, 60 , "SpriteCaillou")
-        this.SpriteHitboxTest = this.physics.add.sprite(224, 300 , "SpriteHitbox").setImmovable(true);
+        this.SpriteCaillou = this.physics.add.sprite(672, 32 , "SpriteCaillou")//.setImmovable(true);
+        this.SpriteCaillouDeux = this.physics.add.sprite(1376, 32 , "SpriteCaillouDeux")//.setImmovable(true);
+        
+        this.SpriteHitboxTest = this.physics.add.sprite(672, 96 , "SpriteHitbox").setImmovable(true);
         this.SpriteHitboxTest.body.allowGravity = false;
-        this.SpriteHitboxTest.setSize(32, 170)
+        this.SpriteHitboxTest.setSize(33, 33);
+
+        this.SpriteHitboxTestDeux = this.physics.add.sprite(1376, 96 , "SpriteHitbox").setImmovable(true);
+        this.SpriteHitboxTestDeux.body.allowGravity = false;
+        this.SpriteHitboxTestDeux.setSize(33, 33);
 
         this.SpriteChampi = this.physics.add.sprite(1152, 1024 , "SpriteChampi").setImmovable(true);
         this.SpriteChampiUn = this.physics.add.sprite(1216, 1536 , "SpriteChampiUn").setImmovable(true);
         this.SpriteChampiDeux = this.physics.add.sprite(1280, 864 , "SpriteChampiDeux").setImmovable(true);
     //Position Porte et Bouton 
-        this.SpritePorte = this.physics.add.sprite(224, 220 , "SpritePorte")//.setImmovable(true);
-        this.SpritePorte.body.allowGravity = false;
-        this.SpritePorteRose = this.physics.add.sprite(500, 310 , "SpritePorteRose").setImmovable(true);
-        this.SpritePorteVert = this.physics.add.sprite(800, 310 , "SpritePorteVert").setImmovable(true);
+        this.SpritePorte = this.physics.add.sprite(224, 220 , "SpritePorte").setImmovable(true);
+        this.SpritePorteRose = this.physics.add.sprite(672, 96 , "SpritePorteRose")//.setImmovable(true);
+        this.SpritePorteRose.body.allowGravity = false;
+        this.SpritePorteVert = this.physics.add.sprite(1376, 96 , "SpritePorteVert").setImmovable(true);
+        this.SpritePorteVert.body.allowGravity = false
         this.SpriteBouton = this.physics.add.sprite(128, 576 , "SpriteBouton").setImmovable(true);
         this.SpriteBoutonRose = this.physics.add.sprite(1440, 448 , "SpriteBoutonRose").setImmovable(true);
         this.SpriteBoutonVert = this.physics.add.sprite(1312, 1344 , "SpriteBoutonVert").setImmovable(true);
@@ -170,6 +178,7 @@ export default class scene_5 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, sol);
 
         this.physics.add.collider(this.SpriteHitboxTest, this.SpriteCaillou);
+        this.physics.add.collider(this.SpriteHitboxTestDeux, this.SpriteCaillouDeux);
 
 
         this.physics.add.collider(this.SpriteBouton, sol);
@@ -195,9 +204,12 @@ export default class scene_5 extends Phaser.Scene {
 
 
         this.physics.add.collider(this.SpriteCaillou, sol);
+        this.physics.add.collider(this.SpriteCaillouDeux, sol);
     //collisions renard et box
         this.physics.add.collider(this.player, this.SpriteCaillou);
         this.physics.add.collider(this.playerDeux, this.SpriteCaillou, this.PossibiliteDeBougerLaBox, null, this);
+        this.physics.add.collider(this.player, this.SpriteCaillouDeux);
+        this.physics.add.collider(this.playerDeux, this.SpriteCaillouDeux, this.PossibiliteDeBougerLaBox, null, this);
 
         this.physics.add.collider(this.playerDeux, this.SpriteChampi);
         this.physics.add.collider(this.player, this.SpriteChampi,(player, champi) => {
@@ -239,22 +251,23 @@ export default class scene_5 extends Phaser.Scene {
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
         this.physics.add.overlap(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
+
+
+        this.physics.add.overlap(this.player, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
-                this.SpriteHitboxTest.destroy();
+                
                 
             }
         }, null, this);
         this.physics.add.overlap(this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
-                this.SpriteHitboxTest.destroy();
                 
             }
         }, null, this);
 
-        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBoutonRose, function() {
+        this.physics.add.overlap(this.player, this.SpriteBoutonRose, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteRose.destroy();
                 this.SpriteHitboxTest.destroy();
@@ -269,18 +282,19 @@ export default class scene_5 extends Phaser.Scene {
             }
         }, null, this);
 
-        this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBoutonVert, function() {
+        this.physics.add.overlap(this.player, this.SpriteBoutonVert, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteVert.destroy();
-                this.SpriteHitboxTest.destroy();
+                this.SpriteHitboxTestDeux.destroy();
+
                 
             }
         }, null, this);
         this.physics.add.overlap(this.playerDeux, this.SpriteBoutonVert, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorteVert.destroy();
-                this.SpriteHitboxTest.destroy();
-                
+                this.SpriteHitboxTestDeux.destroy();
+
             }
         }, null, this);
        
@@ -342,8 +356,11 @@ export default class scene_5 extends Phaser.Scene {
 
     update(){ 
 
-        this.SpriteHitboxTest.x = this.SpritePorte.x;
-        this.SpriteHitboxTest.y = this.SpritePorte.y;
+        this.SpriteHitboxTest.x = this.SpritePorteRose.x;
+        this.SpriteHitboxTest.y = this.SpritePorteRose.y;
+
+        this.SpriteHitboxTestDeux.x = this.SpritePorteVert.x;
+        this.SpriteHitboxTestDeux.y = this.SpritePorteVert.y;
 
         //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
