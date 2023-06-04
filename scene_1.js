@@ -229,7 +229,7 @@ export default class scene_1 extends Phaser.Scene {
             player.hasTouched = true;
             console.log(player)
             if(this.player.hasTouched && this.playerDeux.hasTouched){
-                this.scene.start("scene_5");
+                this.scene.start("scene_3");
             }
         });
 //-------------------------------------------------------------------------------------------------------------------------------------       
