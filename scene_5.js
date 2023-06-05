@@ -152,8 +152,8 @@ export default class scene_5 extends Phaser.Scene {
         this.SpritePorteVert = this.physics.add.sprite(1376, 96 , "SpritePorteVert").setImmovable(true);
         this.SpritePorteVert.body.allowGravity = false
         this.SpriteBouton = this.physics.add.sprite(128, 576 , "SpriteBouton").setImmovable(true);
-        this.SpriteBoutonRose = this.physics.add.sprite(1440, 448 , "SpriteBoutonRose").setImmovable(true);
-        this.SpriteBoutonVert = this.physics.add.sprite(1312, 1344 , "SpriteBoutonVert").setImmovable(true);
+        this.SpriteBoutonRose = this.physics.add.sprite(1312, 1344 , "SpriteBoutonRose").setImmovable(true);
+        this.SpriteBoutonVert = this.physics.add.sprite(1440, 448 , "SpriteBoutonVert").setImmovable(true);
 
     //Position Sortie
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
@@ -162,7 +162,7 @@ export default class scene_5 extends Phaser.Scene {
         this.player = this.physics.add.sprite(150, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
-        this.playerDeux.body.setSize(97,81);
+        this.playerDeux.body.setSize(100,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
