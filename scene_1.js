@@ -44,7 +44,7 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('doggo', 'assets/doggo.png');
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
-        {frameWidth: 133, frameHeight: 65});
+        {frameWidth: 133.16, frameHeight: 72});
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
         {frameWidth: 153, frameHeight: 88});
      
@@ -239,21 +239,27 @@ export default class scene_1 extends Phaser.Scene {
 
         this.anims.create({
             key: 'idle',
-            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 10 }),
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 11 }),
             frameRate: 16,
             repeat: -1
         });
         this.anims.create({
             key: 'jump',
-            frames: [{ key: 'SpritePetitRenard', frame: 11 }],
-            frameRate: 0
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 24, end: 26 }),
+            frameRate: 16,
+            repeat: 0
         });
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 12, end: 22 }),
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 12, end: 15 }),
             frameRate: 16,
             repeat: -1
         });
+
+
+
+
+        
 
         this.anims.create({
             key: 'idle',
@@ -273,6 +279,7 @@ export default class scene_1 extends Phaser.Scene {
             repeat: -1
         });
     }
+    
 
     update(){ 
 
@@ -330,23 +337,33 @@ export default class scene_1 extends Phaser.Scene {
             
         }
 // Déplacement du Joueur 1 
-        if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
+         if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(-180); 
-            //this.anims.play('walk', true);
+            this.player.flipX=true;
+            
+            if(this.player.body.velocity.y == 0){
+                this.player.anims.play('walk', true);
+            }
+
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(180);
-            //this.anims.play('walk', true); 
+            this.player.flipX=false; 
+
+            if(this.player.body.velocity.y == 0){
+                this.player.anims.play('walk', true);
+            }
         }
         else{
             this.player.setVelocityX(0);
-            this.anims.play('idle', true);
+            this.player.anims.play('idle', true);
         }
 
 
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
-            //this.anims.play('jump', true);
+            this.player.anims.play('jump', true);
+            console.log("hihi"); 
         }
 //WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

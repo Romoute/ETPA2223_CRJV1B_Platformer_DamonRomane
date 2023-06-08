@@ -41,7 +41,7 @@ export default class scene_4 extends Phaser.Scene {
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
        
-        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png',
+        this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 72});
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
         {frameWidth: 153, frameHeight: 88});
@@ -428,7 +428,7 @@ export default class scene_4 extends Phaser.Scene {
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
-            console.log("Bonjour");
+            //console.log("Bonjour");
             this.invincible = true;
             this.hp -= 1;
             this.player.setTint(0xff0000);

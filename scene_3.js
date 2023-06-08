@@ -41,7 +41,7 @@ export default class scene_3 extends Phaser.Scene {
         this.load.image('chasseur', 'assets/chasseur.png');
         this.load.image('doggo', 'assets/doggo.png');
        
-        this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png',
+        this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 72});
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
         {frameWidth: 153, frameHeight: 88});
@@ -180,8 +180,8 @@ export default class scene_3 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, this.SpritePorte);
 
    
-        this.physics.add.collider(this.playerDeux, this.SpriteHitboxMort, this.loseHp, null, this);
-        this.physics.add.collider(this.player, this.SpriteHitboxMort, this.loseHp, null, this);
+        this.physics.add.overlap(this.playerDeux, this.SpriteHitboxMort, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.SpriteHitboxMort, this.loseHp, null, this);
 
         
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
@@ -246,6 +246,7 @@ export default class scene_3 extends Phaser.Scene {
 
     update(){ 
 
+        
         //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
             this.PossibiliteDeBougerLaBoxADroite = true;
@@ -400,8 +401,8 @@ export default class scene_3 extends Phaser.Scene {
    
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
+        console.log(this.invincible);
         if (this.invincible == false){
-            console.log("Bonjour");
             this.invincible = true;
             this.hp -= 1;
             this.player.setTint(0xff0000);
