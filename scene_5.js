@@ -37,8 +37,8 @@ export default class scene_5 extends Phaser.Scene {
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 72});
-        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
-     
+        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
+        {frameWidth: 153, frameHeight: 88});
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");

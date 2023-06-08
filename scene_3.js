@@ -43,7 +43,8 @@ export default class scene_3 extends Phaser.Scene {
        
         this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 72});
-        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
+        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
+        {frameWidth: 153, frameHeight: 88});
      
 
         //Preload de la map
@@ -400,7 +401,7 @@ export default class scene_3 extends Phaser.Scene {
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
-            //console.log("Bonjour");
+            console.log("Bonjour");
             this.invincible = true;
             this.hp -= 1;
             this.player.setTint(0xff0000);

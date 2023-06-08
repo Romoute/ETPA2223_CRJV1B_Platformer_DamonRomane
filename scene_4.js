@@ -43,8 +43,8 @@ export default class scene_4 extends Phaser.Scene {
        
         this.load.image('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 72});
-        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
-     
+        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
+        {frameWidth: 153, frameHeight: 88});
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
@@ -141,13 +141,13 @@ export default class scene_4 extends Phaser.Scene {
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
     //Position joueur
-        this.player = this.physics.add.sprite(150, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(100, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
-        this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
+        this.playerDeux = this.physics.add.sprite(50, 300, "SpriteGrandRenard");
         this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
-        this.SpriteHitBoxMort = this.physics.add.sprite(640,416, "SpriteHitbox").setSize(320,10);
+        this.SpriteHitBoxMort = this.physics.add.sprite(400,416, "SpriteHitbox").setSize(700,10);
 
     //Position touche C
     
@@ -428,7 +428,7 @@ export default class scene_4 extends Phaser.Scene {
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     loseHp(){
         if (this.invincible == false){
-            //console.log("Bonjour");
+            console.log("Bonjour");
             this.invincible = true;
             this.hp -= 1;
             this.player.setTint(0xff0000);

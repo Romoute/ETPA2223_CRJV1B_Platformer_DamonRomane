@@ -45,7 +45,8 @@ export default class scene_1 extends Phaser.Scene {
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 65});
-        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
+        this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
+        {frameWidth: 153, frameHeight: 88});
      
 
         //Preload de la map
@@ -80,16 +81,8 @@ export default class scene_1 extends Phaser.Scene {
     }
     create(){
 
-/*
 
 
-        this.anims.create({
-            key : "idle",
-            frameRate: 12,
-            frames: this.anims.generateFrameNumbers("SpritePetitRenard", { start: 2, end: 11 }),
-            repeat: 1
-        });
-*/
     //CA CAILLOU
         
 
@@ -206,12 +199,6 @@ export default class scene_1 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, this.SpriteCaillou, this.PossibiliteDeBougerLaBox, null, this);
         
 
-    //collisions porte/boutons et joueurs
-        
-
-
-    //collisions perso et champi
-        
 
    
     //this.physics.add.collider(this.player, this.loseHp, null, this);
@@ -250,15 +237,41 @@ export default class scene_1 extends Phaser.Scene {
 
 
 
-
-//ANIMATION-------------------------------------------------------------------------------------------------------------------------------------------
-/*
         this.anims.create({
-            key: 'IdlePetit',
-            frames: [{ key: 'SpriteIdlePetit', frame: 11 }],
-            frameRate: 20
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 10 }),
+            frameRate: 16,
+            repeat: -1
         });
-   */
+        this.anims.create({
+            key: 'jump',
+            frames: [{ key: 'SpritePetitRenard', frame: 11 }],
+            frameRate: 0
+        });
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 12, end: 22 }),
+            frameRate: 16,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 0, end: 10 }),
+            frameRate: 16,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jump',
+            frames: [{ key: 'SpriteGrandRenard', frame: 11 }],
+            frameRate: 0
+        });
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 12, end: 22 }),
+            frameRate: 16,
+            repeat: -1
+        });
     }
 
     update(){ 
@@ -319,17 +332,21 @@ export default class scene_1 extends Phaser.Scene {
 // Déplacement du Joueur 1 
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(-180); 
+            //this.anims.play('walk', true);
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(180); 
+            this.player.setVelocityX(180);
+            //this.anims.play('walk', true); 
         }
         else{
             this.player.setVelocityX(0);
+            this.anims.play('idle', true);
         }
 
 
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
+            //this.anims.play('jump', true);
         }
 //WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -438,4 +455,7 @@ export default class scene_1 extends Phaser.Scene {
     SpriteF(){
         this.SpriteToucheF.setAlpha(1);
     }
+    
+    
 }
+
