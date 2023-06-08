@@ -90,9 +90,9 @@ export default class scene_3 extends Phaser.Scene {
         this.IsOnFirstPlayer = true;
         this.speed = 300; 
         this.direction = "left"; 
-        this.hp = 1; 
+        this.hp = 3; 
         this.invincible = false;  
-        this.invincibleFrame = 60; 
+        this.invincibleFrame = 0; 
 
   
 
@@ -139,11 +139,15 @@ export default class scene_3 extends Phaser.Scene {
         this.player.body.setSize(70,65);
         this.playerDeux = this.physics.add.sprite(100, 300, "SpriteGrandRenard");
         this.playerDeux.body.setSize(90,81);
+        this.SpriteHitboxDegat = this.physics.add.sprite(640,450, "SpriteHitbox").setImmovable(true);
+        this.SpriteHitboxDegat.body.setSize(320,20);
+        this.SpriteHitboxDegat.body.allowGravity = false;
+
+
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
     
 
-        this.SpriteHitBoxMort = this.physics.add.sprite(640,416, "SpriteHitbox").setSize(320,10);
 
 
 
@@ -156,11 +160,10 @@ export default class scene_3 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, sol);
         //this.physics.add.collider(this.chasseur, sol);
         //this.physics.add.collider(this.doggo, sol);
-        this.player.setCollideWorldBounds(true);
-        this.playerDeux.setCollideWorldBounds(true);
+        //this.player.setCollideWorldBounds(true);
+        //this.playerDeux.setCollideWorldBounds(true);
         this.SpriteCaillou.setCollideWorldBounds(true);
         //this.physics.add.collider(this.SpriteSortie, sol);
-        this.SpriteHitBoxMort.setCollideWorldBounds(true);
         
       
 
@@ -180,8 +183,7 @@ export default class scene_3 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, this.SpritePorte);
 
    
-        this.physics.add.overlap(this.playerDeux, this.SpriteHitboxMort, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.SpriteHitboxMort, this.loseHp, null, this);
+
 
         
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
@@ -237,15 +239,46 @@ export default class scene_3 extends Phaser.Scene {
         //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
         
 
+        this.physics.add.collider(this.player, this.SpriteHitboxDegat, this.GetHit, null, this);
+        this.physics.add.collider(this.playerDeux, this.SpriteHitboxDegat, this.GetHitDeux, null, this);
+
         
     }
 
+    GetHit(){
+        console.log("GetHit Fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.player.setTint(0xff0000);
+            this.player.scene.cameras.main.shake(200, 0.01);
+        }
+    }
+    GetHitDeux(){
+        console.log("GetHit Fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.playerDeux.setTint(0xff0000);
+            this.playerDeux.scene.cameras.main.shake(200, 0.01);
+        }
+    }
 
+    loseHp(){
+        console.log("Entree de la fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.player.setTint(0xff0000);
+            this.player.scene.cameras.main.shake(200, 0.01);
+        }
+    }
     
 //POUVOIR BOUGER BOX------------------------------------------------------------------------------------------------
 
     update(){ 
-
+        //console.log("Scene3");
+        console.log(this.invincible);
         
         //CA C EST LE CAILLOU
         if (this.physics.overlap(this.playerDeux, this.SpriteHitboxVideGauche)){
@@ -377,11 +410,11 @@ export default class scene_3 extends Phaser.Scene {
        
 
 //INVULNERABLE------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        if (this.invincible){
+        if (this.invincible == true){
             //console.log(this.invincibleFrame); 
             this.invincibleFrame-- ;
             if(this.invincibleFrame <= 0){
-                    this.invincibleFrame = 60;
+                    this.invincibleFrame = 0;
                     this.player.setTint(0xffffff);
                     this.invincible = false ;
             }
@@ -400,15 +433,7 @@ export default class scene_3 extends Phaser.Scene {
 }
    
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    loseHp(){
-        console.log(this.invincible);
-        if (this.invincible == false){
-            this.invincible = true;
-            this.hp -= 1;
-            this.player.setTint(0xff0000);
-            this.player.scene.cameras.main.shake(200, 0.01);
-        }
-    }
+
 
     cdWallJump() {
         this.player.wallJumping = true;
@@ -418,6 +443,10 @@ export default class scene_3 extends Phaser.Scene {
 
 
     
+
+
+
+
 
 
 

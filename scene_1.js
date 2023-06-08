@@ -44,9 +44,9 @@ export default class scene_1 extends Phaser.Scene {
         this.load.image('doggo', 'assets/doggo.png');
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
-        {frameWidth: 133.16, frameHeight: 72});
+        {frameWidth: 96, frameHeight: 64});
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
-        {frameWidth: 153, frameHeight: 88});
+        {frameWidth: 112, frameHeight: 80});
      
 
         //Preload de la map
@@ -239,46 +239,51 @@ export default class scene_1 extends Phaser.Scene {
 
         this.anims.create({
             key: 'idle',
-            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 11 }),
-            frameRate: 16,
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 9 }),
+            frameRate: 7,
             repeat: -1
         });
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 24, end: 26 }),
-            frameRate: 16,
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 20, end: 22 }),
+            frameRate: 7,
             repeat: 0
         });
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 12, end: 15 }),
-            frameRate: 16,
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 10, end: 13 }),
+            frameRate: 7,
             repeat: -1
         });
 
 
 
 
-        
 
         this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 0, end: 10 }),
-            frameRate: 16,
+            key: 'idleDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 0, end: 5 }),
+            frameRate: 7,
             repeat: -1
         });
         this.anims.create({
-            key: 'jump',
-            frames: [{ key: 'SpriteGrandRenard', frame: 11 }],
-            frameRate: 0
+            key: 'jumpDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 12, end: 14 }),
+            frameRate: 7,
+            repeat: 0
         });
         this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 12, end: 22 }),
-            frameRate: 16,
+            key: 'walkDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 6, end: 9 }),
+            frameRate: 7,
             repeat: -1
         });
+
+
+
+
     }
+
     
 
     update(){ 
@@ -344,6 +349,7 @@ export default class scene_1 extends Phaser.Scene {
             if(this.player.body.velocity.y == 0){
                 this.player.anims.play('walk', true);
             }
+            console.log("hihi"); 
 
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
@@ -363,7 +369,7 @@ export default class scene_1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
             this.player.anims.play('jump', true);
-            console.log("hihi"); 
+            
         }
 //WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -403,9 +409,22 @@ export default class scene_1 extends Phaser.Scene {
 // Déplacement du Joueur 2
         if (this.cursors.left.isDown    && this.PossibiliteDeBougerLeCaillou == true){
             this.SpriteCaillou.setVelocityX(-150);
+
+            this.playerDeux.flipX=true;
+             
+            if(this.playerDeux.body.velocity.y == 0){
+                this.playerDeux.anims.play('walkDeux', true);
+            }
+            
         }
         else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
             this.SpriteCaillou.setVelocityX(150);
+            this.playerDeux.flipX=false; 
+
+            if(this.playerDeux.body.velocity.y == 0){
+                this.playerDeux.anims.play('walkDeux', true);
+            }
+           
         }
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
             this.playerDeux.setVelocityX(-160); 
@@ -416,10 +435,12 @@ export default class scene_1 extends Phaser.Scene {
         else{
             this.playerDeux.setVelocityX(0);
             this.SpriteCaillou.setVelocityX(0);
+            this.playerDeux.anims.play('idleDeux', true);
         }
 
         if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
             this.playerDeux.setVelocityY(-300); 
+            this.playerDeux.anims.play('jumpDeux', true);
         }
 
         
