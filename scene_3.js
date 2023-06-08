@@ -142,6 +142,8 @@ export default class scene_3 extends Phaser.Scene {
         //this.player.body.setSize(32, 32 , 300, 100); 
     
 
+        this.SpriteHitBoxMort = this.physics.add.sprite(640,416, "SpriteHitbox").setSize(320,10);
+
 
 
 //COLLISIONS----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,7 +159,8 @@ export default class scene_3 extends Phaser.Scene {
         this.playerDeux.setCollideWorldBounds(true);
         this.SpriteCaillou.setCollideWorldBounds(true);
         //this.physics.add.collider(this.SpriteSortie, sol);
-
+        this.SpriteHitBoxMort.setCollideWorldBounds(true);
+        
       
 
         
@@ -176,8 +179,10 @@ export default class scene_3 extends Phaser.Scene {
         this.physics.add.collider(this.playerDeux, this.SpritePorte);
 
    
-    //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.loseHp, null, this);
+        this.physics.add.collider(this.playerDeux, this.SpriteHitboxMort, this.loseHp, null, this);
+        this.physics.add.collider(this.player, this.SpriteHitboxMort, this.loseHp, null, this);
+
+        
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
@@ -191,7 +196,7 @@ export default class scene_3 extends Phaser.Scene {
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.loseHp, null, this);
+    
 
      
 

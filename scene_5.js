@@ -146,7 +146,7 @@ export default class scene_5 extends Phaser.Scene {
         this.SpriteChampiUn = this.physics.add.sprite(1216, 1536 , "SpriteChampiUn").setImmovable(true);
         this.SpriteChampiDeux = this.physics.add.sprite(1280, 864 , "SpriteChampiDeux").setImmovable(true);
     //Position Porte et Bouton 
-        this.SpritePorte = this.physics.add.sprite(224, 220 , "SpritePorte").setImmovable(true);
+        this.SpritePorte = this.physics.add.sprite(224, 300 , "SpritePorte").setImmovable(true);
         this.SpritePorteRose = this.physics.add.sprite(672, 96 , "SpritePorteRose")//.setImmovable(true);
         this.SpritePorteRose.body.allowGravity = false;
         this.SpritePorteVert = this.physics.add.sprite(1376, 96 , "SpritePorteVert").setImmovable(true);

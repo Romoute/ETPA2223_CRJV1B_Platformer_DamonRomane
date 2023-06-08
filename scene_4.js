@@ -66,6 +66,10 @@ export default class scene_4 extends Phaser.Scene {
 
         this.load.image('SpriteCaillou', 'assets/SpriteCaillou.png');
         this.load.image('SpriteHitbox', 'assets/SpriteHitbox.png');
+
+
+        this.load.image('SpriteToucheC', 'assets/SpriteToucheC.png');
+        this.load.image('SpriteToucheF', 'assets/SpriteToucheF.png');
       
         
 
@@ -143,6 +147,13 @@ export default class scene_4 extends Phaser.Scene {
         this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
+        this.SpriteHitBoxMort = this.physics.add.sprite(640,416, "SpriteHitbox").setSize(320,10);
+
+    //Position touche C
+    
+        this.SpriteToucheC = this.physics.add.staticSprite(790, 32, "SpriteToucheC").setSize(50,50);
+        this.SpriteToucheC.setAlpha(0)
+
     
 
 
@@ -163,6 +174,7 @@ export default class scene_4 extends Phaser.Scene {
         this.playerDeux.setCollideWorldBounds(true);
         this.SpriteCaillou.setCollideWorldBounds(true);
         //this.physics.add.collider(this.SpriteSortie, sol);
+        this.SpriteHitBoxMort.setCollideWorldBounds(true);
 
       
 
@@ -181,9 +193,19 @@ export default class scene_4 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.SpritePorte);
         this.physics.add.collider(this.playerDeux, this.SpritePorte);
 
+        this.physics.add.overlap(this.player, this.SpriteHitboxMort, this.loseHp, null, this);
+        this.physics.add.overlap(this.playerDeux, this.SpriteHitboxMort, this.loseHp, null, this);
+
    
-    //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.loseHp, null, this);
+        //this.physics.add.collider(this.player, this.loseHp, null, this);
+        //this.physics.add.overlap(this.player, this.loseHp, null, this);
+        this.physics.add.overlap(this.player, this.SpriteToucheC, this.SpriteC, null, this);
+        //this.physics.add.overlap(this.player, this.SpriteToucheF,this.SpriteF, null, this);
+        this.physics.add.overlap(this.playerDeux, this.SpriteToucheC);
+
+
+
+
         this.physics.add.overlap(this.player || this.playerDeux, this.SpriteBouton, function() {
             if (this.clavier.C.isDown){
                 this.SpritePorte.destroy();
@@ -203,7 +225,7 @@ export default class scene_4 extends Phaser.Scene {
         
 
     //this.physics.add.collider(this.player, this.loseHp, null, this);
-        this.physics.add.overlap(this.player, this.loseHp, null, this);
+
 
      
 
@@ -399,7 +421,7 @@ export default class scene_4 extends Phaser.Scene {
             this.hpUI.setTexture("hp1");
             
         }else if(this.hp <= 0){
-            this.scene.start("scene_3");
+            this.scene.start("scene_4");
         }
 }
    
@@ -416,6 +438,10 @@ export default class scene_4 extends Phaser.Scene {
 
     cdWallJump() {
         this.player.wallJumping = true;
+    }
+
+    SpriteC(){
+        this.SpriteToucheC.setAlpha(1);
     }
 
 }
