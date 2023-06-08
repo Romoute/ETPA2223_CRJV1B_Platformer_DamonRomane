@@ -42,9 +42,9 @@ export default class scene_4 extends Phaser.Scene {
         this.load.image('doggo', 'assets/doggo.png');
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
-        {frameWidth: 133, frameHeight: 72});
+        {frameWidth: 96, frameHeight: 64});
         this.load.spritesheet('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
-        {frameWidth: 153, frameHeight: 88});
+        {frameWidth: 112, frameHeight: 80});
 
         //Preload de la map
         this.load.image("Tileset", "tileset/tileset_1.png");
@@ -147,7 +147,7 @@ export default class scene_4 extends Phaser.Scene {
         this.playerDeux.body.setSize(90,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
-        this.SpriteHitBoxMort = this.physics.add.sprite(400,416, "SpriteHitbox").setSize(700,10);
+     
 
     //Position touche C
     
@@ -155,6 +155,9 @@ export default class scene_4 extends Phaser.Scene {
         this.SpriteToucheC.setAlpha(0)
 
     
+        this.SpriteHitboxDegat = this.physics.add.sprite(416,450, "SpriteHitbox").setImmovable(true);
+        this.SpriteHitboxDegat.body.setSize(700,10);
+        this.SpriteHitboxDegat.body.allowGravity = false;
 
 
 
@@ -174,7 +177,7 @@ export default class scene_4 extends Phaser.Scene {
         this.playerDeux.setCollideWorldBounds(true);
         this.SpriteCaillou.setCollideWorldBounds(true);
         //this.physics.add.collider(this.SpriteSortie, sol);
-        this.SpriteHitBoxMort.setCollideWorldBounds(true);
+            
 
       
 
@@ -262,9 +265,88 @@ export default class scene_4 extends Phaser.Scene {
         //ici faire changement de scene. Ne pas oublier de mettre les collisions et overlap avec le sol
 
         //pour nouvelle scene je crée une hitbox_sortie que je place au bout de mon niveau
+
+        
+        this.physics.add.collider(this.player, this.SpriteHitboxDegat, this.GetHit, null, this);
+        this.physics.add.collider(this.playerDeux, this.SpriteHitboxDegat, this.GetHitDeux, null, this);
+
+        
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 0, end: 9 }),
+            frameRate: 7,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 20, end: 22 }),
+            frameRate: 7,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNumbers('SpritePetitRenard', { start: 10, end: 13 }),
+            frameRate: 7,
+            repeat: -1
+        });
+
+
+
+
+
+        this.anims.create({
+            key: 'idleDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 0, end: 5 }),
+            frameRate: 7,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jumpDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 12, end: 14 }),
+            frameRate: 7,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walkDeux',
+            frames: this.anims.generateFrameNumbers('SpriteGrandRenard', { start: 6, end: 9 }),
+            frameRate: 7,
+            repeat: -1
+        });
+
+
         
 
         
+    }
+
+    
+    GetHit(){
+        console.log("GetHit Fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.player.setTint(0xff0000);
+            this.player.scene.cameras.main.shake(200, 0.01);
+        }
+    }
+    GetHitDeux(){
+        console.log("GetHit Fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.playerDeux.setTint(0xff0000);
+            this.playerDeux.scene.cameras.main.shake(200, 0.01);
+        }
+    }
+
+    loseHp(){
+        console.log("Entree de la fonction");
+        if (this.invincible == false){
+            this.invincible = true;
+            this.hp -= 1;
+            this.player.setTint(0xff0000);
+            this.player.scene.cameras.main.shake(200, 0.01);
+        }
     }
 
 
@@ -327,76 +409,107 @@ export default class scene_4 extends Phaser.Scene {
             
         }
 // Déplacement du Joueur 1 
-        if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(-180); 
-        }
-        else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
-            this.player.setVelocityX(180); 
-        }
-        else{
-            this.player.setVelocityX(0);
-        }
+if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
+    this.player.setVelocityX(-180); 
+    this.player.flipX=true;
+    
+    if(this.player.body.velocity.y == 0){
+        this.player.anims.play('walk', true);
+    }
+    console.log("hihi"); 
+
+}
+else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
+    this.player.setVelocityX(180);
+    this.player.flipX=false; 
+
+    if(this.player.body.velocity.y == 0){
+        this.player.anims.play('walk', true);
+    }
+}
+else{
+    this.player.setVelocityX(0);
+    this.player.anims.play('idle', true);
+}
 
 
-        if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
-            this.player.setVelocityY(-300); 
-        }
+if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
+    this.player.setVelocityY(-300); 
+    this.player.anims.play('jump', true);
+    
+}
 //WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-        if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
-            if (this.player.wallJumping == true) {
+if (this.cursors.up.isDown && this.player.body.blocked.right || this.clavier.SPACE.isDown && this.player.body.blocked.right) {
+    if (this.player.wallJumping == true) {
 
-                this.player.wallJumping = false;
+        this.player.wallJumping = false;
 
-                this.time.delayedCall(500, () => {
-                    this.cdWallJump(); 
-                });
-           
-                this.player.setVelocityY(-300);
-                
-                
-            }
-        }
+        this.time.delayedCall(500, () => {
+            this.cdWallJump(); 
+        });
+   
+        this.player.setVelocityY(-300);
         
-        if (this.cursors.up.isDown && this.player.body.blocked.left || this.clavier.SPACE.isDown && this.player.body.blocked.left) {
-            if (this.player.wallJumping == true) {
-
-                this.player.wallJumping = false;
-
-                this.time.delayedCall(500, () => {
-                    this.cdWallJump(); 
-                });
-
-                this.player.setVelocityY(-300);
-               
-            }    
-        }
         
-    
-    
+    }
+}
+
+if (this.cursors.up.isDown && this.player.body.blocked.left || this.clavier.SPACE.isDown && this.player.body.blocked.left) {
+    if (this.player.wallJumping == true) {
+
+        this.player.wallJumping = false;
+
+        this.time.delayedCall(500, () => {
+            this.cdWallJump(); 
+        });
+
+        this.player.setVelocityY(-300);
+       
+    }    
+}
+
+
+
 
 // Déplacement du Joueur 2
-        if (this.cursors.left.isDown && this.PossibiliteDeBougerLeCaillou == true){
-            this.SpriteCaillou.setVelocityX(-150);
-        }
-        else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
-            this.SpriteCaillou.setVelocityX(150);
-        }
-        if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
-            this.playerDeux.setVelocityX(-160); 
-        }
-        else if (this.cursors.right.isDown && this.IsOnFirstPlayer == false || this.clavier.D.isDown && this.IsOnFirstPlayer == false){ 
-            this.playerDeux.setVelocityX(160); 
-        }
-        else{
-            this.playerDeux.setVelocityX(0);
-            this.SpriteCaillou.setVelocityX(0);
-        }
+if (this.cursors.left.isDown    && this.PossibiliteDeBougerLeCaillou == true){
+    this.SpriteCaillou.setVelocityX(-150);
 
-        if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
-            this.playerDeux.setVelocityY(-300); 
-        }
+    this.playerDeux.flipX=true;
+     
+    if(this.playerDeux.body.velocity.y == 0){
+        this.playerDeux.anims.play('walkDeux', true);
+    }
+    
+}
+else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
+    this.SpriteCaillou.setVelocityX(150);
+    this.playerDeux.flipX=false; 
+
+    if(this.playerDeux.body.velocity.y == 0){
+        this.playerDeux.anims.play('walkDeux', true);
+    }
+   
+}
+if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
+    this.playerDeux.setVelocityX(-160); 
+}
+else if (this.cursors.right.isDown && this.IsOnFirstPlayer == false || this.clavier.D.isDown && this.IsOnFirstPlayer == false){ 
+    this.playerDeux.setVelocityX(160); 
+}
+else{
+    this.playerDeux.setVelocityX(0);
+    this.SpriteCaillou.setVelocityX(0);
+    this.playerDeux.anims.play('idleDeux', true);
+}
+
+if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
+    this.playerDeux.setVelocityY(-300); 
+    this.playerDeux.anims.play('jumpDeux', true);
+}
+
 
         
 
@@ -426,16 +539,7 @@ export default class scene_4 extends Phaser.Scene {
 }
    
 // FONCTION LOSE HP------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    loseHp(){
-        if (this.invincible == false){
-            //console.log("Bonjour");
-            this.invincible = true;
-            this.hp -= 1;
-            this.player.setTint(0xff0000);
-            this.player.scene.cameras.main.shake(200, 0.01);
-        }
-    }
-
+   
     cdWallJump() {
         this.player.wallJumping = true;
     }
