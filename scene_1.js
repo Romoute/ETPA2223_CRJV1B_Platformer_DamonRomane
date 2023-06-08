@@ -45,9 +45,7 @@ export default class scene_1 extends Phaser.Scene {
        
         this.load.spritesheet('SpritePetitRenard', 'assets/SpritePetitRenard.png',
         {frameWidth: 133, frameHeight: 65});
-        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png',
-        {frameWidth: 133, frameHeight: 65});
-        
+        this.load.image('SpriteGrandRenard', 'assets/SpriteGrandRenard.png');
      
 
         //Preload de la map
@@ -321,21 +319,17 @@ export default class scene_1 extends Phaser.Scene {
 // Déplacement du Joueur 1 
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == true || this.clavier.Q.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(-180); 
-            this.anims.play('run', true);
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == true || this.clavier.D.isDown && this.IsOnFirstPlayer == true){ 
             this.player.setVelocityX(180); 
-            this.anims.play('run', true);
         }
         else{
             this.player.setVelocityX(0);
-            this.anims.play('idle', true);
         }
 
 
         if (this.cursors.up.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true || this.clavier.SPACE.isDown && this.player.body.onFloor() && this.IsOnFirstPlayer == true){
             this.player.setVelocityY(-300); 
-            this.anims.play('jump', true);
         }
 //WALL JUMP-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -375,29 +369,23 @@ export default class scene_1 extends Phaser.Scene {
 // Déplacement du Joueur 2
         if (this.cursors.left.isDown    && this.PossibiliteDeBougerLeCaillou == true){
             this.SpriteCaillou.setVelocityX(-150);
-            this.anims.play('runDeux', true);
         }
         else if (this.cursors.right.isDown && this.SpriteCaillouGoToRight == true){
             this.SpriteCaillou.setVelocityX(150);
-            this.anims.play('runDeux', true);
         }
         if (this.cursors.left.isDown && this.IsOnFirstPlayer == false || this.clavier.Q.isDown && this.IsOnFirstPlayer == false){ 
             this.playerDeux.setVelocityX(-160); 
-            this.anims.play('runDeux', true);
         }
         else if (this.cursors.right.isDown && this.IsOnFirstPlayer == false || this.clavier.D.isDown && this.IsOnFirstPlayer == false){ 
             this.playerDeux.setVelocityX(160); 
-            this.anims.play('runDeux', true);
         }
         else{
             this.playerDeux.setVelocityX(0);
-            this.anims.play('idleDeux', true);
             this.SpriteCaillou.setVelocityX(0);
         }
 
         if (this.cursors.up.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false || this.clavier.SPACE.isDown && this.playerDeux.body.onFloor() && this.IsOnFirstPlayer == false){
             this.playerDeux.setVelocityY(-300); 
-            this.anims.play('jumpDeux', true);
         }
 
         
@@ -449,56 +437,5 @@ export default class scene_1 extends Phaser.Scene {
 
     SpriteF(){
         this.SpriteToucheF.setAlpha(1);
-    }
-
-
-    //LES FRAME C'EST PAS LES BONNES  { start: 24, end: 28 }), CA LA
-    create_animation() {
-
-        this.scene.anims.create({
-			key: 'idle',
-			frames: this.scene.anims.generateFrameNumbers('SpritePetitRenard', { start: 24, end: 28 }),
-			frameRate: 5,
-			repeat: -1
-		}); 
-
-        this.scene.anims.create({
-			key: 'run',
-			frames: this.scene.anims.generateFrameNumbers('SpritePetitRenard', { start: 9, end: 15 }),
-			frameRate: 12,
-			repeat: -1
-		}); 
-
-        this.scene.anims.create({
-			key: 'jump',
-			frames: this.scene.anims.generateFrameNumbers('SpritePetitRenard', { start: 15, end: 21 }),
-			frameRate: 30,
-			repeat: 0
-		}); 
-
-    }
-    create_animationDeux() {
-
-        this.scene.anims.create({
-			key: 'idleDeux',
-			frames: this.scene.anims.generateFrameNumbers('SpriteGrandRenard', { start: 24, end: 28 }),
-			frameRate: 5,
-			repeat: -1
-		}); 
-
-        this.scene.anims.create({
-			key: 'runDeux',
-			frames: this.scene.anims.generateFrameNumbers('SpriteGrandRenard', { start: 9, end: 15 }),
-			frameRate: 12,
-			repeat: -1
-		}); 
-
-        this.scene.anims.create({
-			key: 'jumpDeux',
-			frames: this.scene.anims.generateFrameNumbers('SpriteGrandRenard', { start: 15, end: 21 }),
-			frameRate: 30,
-			repeat: 0
-		}); 
-
     }
 }
