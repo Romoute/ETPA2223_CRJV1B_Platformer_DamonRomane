@@ -151,9 +151,9 @@ export default class scene_1 extends Phaser.Scene {
         //this.SpriteSortie = this.physics.add.staticSprite(900, 150, "SpriteSortie");
         
     //Position joueur
-        this.player = this.physics.add.sprite(600, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
+        this.player = this.physics.add.sprite(140, 300 , "SpritePetitRenard"); // 0, 330, ici je change la position de mes chara
         this.player.body.setSize(70,65);
-        this.playerDeux = this.physics.add.sprite(230, 300, "SpriteGrandRenard");
+        this.playerDeux = this.physics.add.sprite(240, 300, "SpriteGrandRenard");
         this.playerDeux.body.setSize(97,81);
         this.cameras.main.startFollow(this.player);
         //this.player.body.setSize(32, 32 , 300, 100); 
@@ -235,7 +235,7 @@ export default class scene_1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 896, 448);        
     
 
-
+//animation petit renard
 
         this.anims.create({
             key: 'idle',
@@ -257,7 +257,7 @@ export default class scene_1 extends Phaser.Scene {
         });
 
 
-
+//animation grand renard
 
 
         this.anims.create({
